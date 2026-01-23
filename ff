@@ -1,0 +1,87 @@
+using UnityEngine;
+using System.Collections;
+
+public class FireworkCannonManager : MonoBehaviour
+{
+    [Header("Références")]
+    public GameObject fireworkPrefab; 
+    public Transform launchPoint;
+    public Transform targetPoint;
+    public Transform canonMesh; // Glisse le modèle du canon ici pour le faire trembler
+
+    private Coroutine timeoutCoroutine;
+
+    void Start()
+    {
+        StartNewCycle(); 
+    }
+
+    public void StartNewCycle()
+    {
+        StartCoroutine(FireworkSequence());
+    }
+    
+    IEnumerator FireworkSequence()
+    {
+        // Apparition du missile
+        GameObject currentFirework = Instantiate(fireworkPrefab, launchPoint);
+        currentFirework.transform.localPosition = Vector3.zero;
+
+        FireworkAction script = currentFirework.GetComponent<FireworkAction>();
+        if (script != null) script.Setup(targetPoint, this);
+
+        // Temps de chargement
+        yield return new WaitForSeconds(3.0f);
+
+        // Phase d'alerte : on active le clic et le tremblement
+        if (script != null)
+        {
+            script.EnableClick();
+            StartCoroutine(TrembleCanon()); // Le canon tremble
+        }
+
+        timeoutCoroutine = StartCoroutine(WaitAndLaunchAuto(currentFirework, 5f));
+    }
+
+    IEnumerator TrembleCanon()
+    {
+        Vector3 posInitiale = canonMesh.localPosition;
+        // On tremble tant qu'on a une coroutine de timeout active
+        while (timeoutCoroutine != null)
+        {
+            canonMesh.localPosition = posInitiale + Random.insideUnitSphere * 0.05f;
+            yield return null;
+        }
+        canonMesh.localPosition = posInitiale;
+    }
+
+    IEnumerator WaitAndLaunchAuto(GameObject firework, float timeout)
+    {
+        yield return new WaitForSeconds(timeout);
+
+        if (firework != null)
+        {
+            FireworkAction script = firework.GetComponent<FireworkAction>();
+            if (script != null && !script.IsMoving) 
+            {
+                timeoutCoroutine = null; // Arrête le tremblement
+                script.LaunchVertical(); 
+            }
+        }
+    }
+
+    public void CancelTimeout()
+    {
+        if (timeoutCoroutine != null)
+        {
+            StopCoroutine(timeoutCoroutine);
+            timeoutCoroutine = null; // Stop le tremblement
+        }
+    }
+
+    public void OnFireworkSent()
+    {
+        // Optionnel : recul du canon ici plus tard
+        Debug.Log("Missile envoyé !");
+    }
+}

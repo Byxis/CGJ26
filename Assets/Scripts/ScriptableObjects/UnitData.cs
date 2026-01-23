@@ -5,5 +5,6 @@ public class UnitData : ScriptableObject
 {
     public Sprite icon;
     public GameObject unitPrefab;
+
     public int clicksRequiredToSpawn;
 }

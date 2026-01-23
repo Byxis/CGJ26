@@ -69,11 +69,12 @@ public class OpponentBehavior : MonoBehaviour
         StartLevel(0);
     }
 
-    void StartLevel(int index)
+    public void StartLevel(int index)
     {
         currentLevelIndex = index;
         accumulatedClicks = 0f;
         PickNextUnitToSpawn();
+        isLevelActive = true;
     }
 
     void FixedUpdate()

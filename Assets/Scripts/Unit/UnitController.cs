@@ -285,8 +285,6 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
             m_healthBar.UpdateHealthBar(m_currentHealth, m_stats.maxHealth);
         if (m_currentHealth <= 0)
             Die();
-
-        Debug.Log("TakeDamage: " + _amount);
     }
 
     public void Heal(float _amount)

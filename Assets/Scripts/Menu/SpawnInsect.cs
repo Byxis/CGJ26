@@ -4,7 +4,7 @@ public class SpawnInsect : MonoBehaviour
 {
 
     private float timer = 0f;
-    [SerializeField] private float spawnInterval = 2f;
+    [SerializeField] private float spawnInterval = 1f;
     [SerializeField] private GameObject insectPrefab;
     [SerializeField] private Transform startPosition;
     // Update is called once per frame

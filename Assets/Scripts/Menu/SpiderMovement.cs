@@ -53,6 +53,7 @@ public class SpiderMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (wait) return;
         // Calculate the direction based on the rotation around the Z axis
         Vector3 dir = target.position - transform.position;
         direction = dir.normalized;

@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 public class MainMenu : MonoBehaviour, IPointerClickHandler
 {
 
+    public GameObject leaderBoardPanel;
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.pointerCurrentRaycast.gameObject != null)
@@ -14,13 +16,28 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler
             switch (buttonName)
             {
                 case "StartButton":
+                if (leaderBoardPanel.activeInHierarchy)
+                    {
+                        break;
+                    }
                     onStartPressed();
                     break;
-                case "OptionsButton":
-                    onOptionsPressed();
+                case "LeaderBoardButton":
+                    if (leaderBoardPanel.activeInHierarchy)
+                    {
+                        break;
+                    }
+                    onLeaderBoardPressed();
                     break;
                 case "ExitButton":
+                    if (leaderBoardPanel.activeInHierarchy)
+                    {
+                        break;
+                    }
                     onExitPressed();
+                    break;
+                case "BackButton":
+                    leaderBoardPanel.SetActive(false);
                     break;
                 default:
                     Debug.Log("Unknown button clicked: " + buttonName);
@@ -35,9 +52,10 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler
         SceneManager.LoadScene("GameScene");
     }
 
-    public void onOptionsPressed()
+    public void onLeaderBoardPressed()
     {
-        Debug.Log("Options button pressed");
+        Debug.Log("LeaderBoard button pressed");
+        leaderBoardPanel.SetActive(true);
     }
 
     public void onExitPressed()

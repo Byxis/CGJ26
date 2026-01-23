@@ -12,51 +12,30 @@ public class CardController : MonoBehaviour
     [Header("Settings")]
     public Transform spawnPoint;   // Glisse un objet vide "SpawnPoint" de ta scène ici
     
-    [Header("Debug/Test")]
-    public UnitData testData;      // Permet de tester sans attendre le Manager
+    [Header("Autre")]
+    public GameObject unitController;
+    public int click_to_spawn;
 
     private int _currentClicks = 0;
-    private UnitData _data;
-
-    void Start()
-    {
-        // Si tu as mis une carte de test dans l'inspecteur, on l'initialise
-        if (testData != null)
-        {
-            Initialize(testData);
-        }
-    }
 
     void Update()
     {
-        // Effet de rebond : revient à la taille 2 progressivement
         transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * 2f, Time.deltaTime * 10f);
     }
 
-    public void Initialize(UnitData data)
+    void Start()
     {
-        _data = data;
-        
-        if (_data == null) return;
-
-        iconImage.sprite = _data.icon;
-        progressSlider.maxValue = _data.clicksRequiredToSpawn;
-        progressSlider.value = 0;
-        _currentClicks = 0;
-        
+        if (progressSlider != null)
+        {
+            progressSlider.minValue = 0;
+            progressSlider.maxValue = click_to_spawn;
+            progressSlider.value = 0;
+        }
         UpdateVisuals();
     }
 
     public void OnCardClicked()
     {
-        // Sécurité : si aucune donnée n'est chargée, on ne fait rien
-        if (_data == null) 
-        {
-            Debug.LogWarning("La carte n'a pas de UnitData !");
-            return;
-        }
-
-        Debug.Log("Clic sur : " + _data.unitName);
         
         // Effet visuel de clic (grossissement)
         transform.localScale = Vector3.one * 2.3f;
@@ -64,7 +43,7 @@ public class CardController : MonoBehaviour
         _currentClicks++;
         UpdateVisuals();
 
-        if (_currentClicks >= _data.clicksRequiredToSpawn)
+        if (_currentClicks >= click_to_spawn)
         {
             SpawnUnit();
         }
@@ -77,16 +56,17 @@ public class CardController : MonoBehaviour
         progressSlider.value = _currentClicks;
 
         // Calcul du ratio (0 à 1) pour le dégradé
-        float normalizedValue = (float)_currentClicks / _data.clicksRequiredToSpawn;
+        float normalizedValue = (float)_currentClicks / click_to_spawn;
         fillImage.color = progressColor.Evaluate(normalizedValue);
     }
 
     private void SpawnUnit()
     {
-        if (_data.unitPrefab != null && spawnPoint != null)
+        if (unitController != null && spawnPoint != null)
         {
             // Apparition de l'unité
-            Instantiate(_data.unitPrefab, spawnPoint.position, Quaternion.identity);
+            GameObject g = Instantiate(unitController, spawnPoint.position, Quaternion.identity);
+            g.layer = LayerMask.NameToLayer("TeamPlayer");
             Debug.Log("UNITÉ SPAWN !");
         }
         else

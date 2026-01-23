@@ -22,6 +22,8 @@ public struct OpponentLevelConfig
 
 public class OpponentBehavior : MonoBehaviour
 {
+    public static OpponentBehavior Instance { get; private set; }
+
     [Header("Configuration")]
     public Transform spawnPoint;
     public Transform opponentBase;
@@ -34,6 +36,24 @@ public class OpponentBehavior : MonoBehaviour
 
     private bool isLevelActive = true;
     private float noiseOffset;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    public int GetMaxLevel()
+    {
+        int max = 0;
+        if (levelConfigs == null)
+            return 0;
+        foreach (var config in levelConfigs)
+        {
+            if (config.maxLevel > max)
+                max = config.maxLevel;
+        }
+        return max;
+    }
 
     void Start()
     {

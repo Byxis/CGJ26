@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private GameObject m_endGameMenu;
 
     private TMPro.TextMeshProUGUI m_endGameText;
+    private TMPro.TextMeshProUGUI m_levelText;
     private UnityEngine.UI.Button m_actionButton;
     private TMPro.TextMeshProUGUI m_buttonText;
 
@@ -43,18 +44,20 @@ public class GameManager : MonoBehaviour
             {
                 string n = txt.gameObject.name.ToLower();
 
-                // On cherche par mot-clé dans le nom de l'objet
-                if (n.Contains("title") || n.Contains("titre") || n.Contains("header"))
+                if (n.Contains("header"))
                 {
                     m_endGameText = txt;
                 }
-                else if (n.Contains("button") || n.Contains("btn") || n.Contains("label"))
+                else if (n.Contains("action1"))
                 {
                     m_buttonText = txt;
                 }
+                else if (n.Contains("level"))
+                {
+                    m_levelText = txt;
+                }
             }
 
-            // Fallback si on n'a pas trouvé par les noms
             if (m_buttonText == null && m_actionButton != null)
             {
                 m_buttonText = m_actionButton.GetComponentInChildren<TMPro.TextMeshProUGUI>(true);
@@ -90,10 +93,18 @@ public class GameManager : MonoBehaviour
         {
             m_endGameMenu.SetActive(true);
 
+            if (m_levelText != null && OpponentBehavior.Instance != null)
+            {
+                int current = OpponentBehavior.Instance.currentLevelIndex + 1;
+                int total = OpponentBehavior.Instance.GetMaxLevel() + 1;
+                m_levelText.text = $"Niveau {current} / {total}";
+            }
+
             if (State == GameState.GameOver)
             {
                 m_endGameText.text = "Défaite";
                 m_buttonText.text = "Rejouer";
+                m_endGameText.color = Color.red;
                 m_actionButton.onClick.RemoveAllListeners();
                 m_actionButton.onClick.AddListener(RestartLevel);
             }
@@ -101,6 +112,7 @@ public class GameManager : MonoBehaviour
             {
                 m_endGameText.text = "Victoire !";
                 m_buttonText.text = "Continuer";
+                m_endGameText.color = Color.green;
                 m_actionButton.onClick.RemoveAllListeners();
                 m_actionButton.onClick.AddListener(NextLevel);
             }

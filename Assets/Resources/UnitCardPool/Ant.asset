@@ -21,7 +21,7 @@ MonoBehaviour:
   attackCooldown: 1
   unitType: 0
   clickToKill: 0
-  effectOnHit: 0
+  effectOnHit: 2
   effectDuration: 0
   effectValue: 1
   explosionRadius: 0

@@ -11,6 +11,7 @@ public class CardController : MonoBehaviour
     public Slider progressSlider;
     public Image fillImage;
     public Gradient progressColor;
+    public TMPro.TextMeshProUGUI costText;
     public int clicksRequiredToSpawn;
 
     [Header("Autre")]
@@ -43,6 +44,11 @@ public class CardController : MonoBehaviour
                 progressSlider.minValue = 0;
                 progressSlider.maxValue = unitData.clicksRequiredToSpawn;
                 progressSlider.value = 0;
+            }
+
+            if (costText != null)
+            {
+                costText.text = unitData.clicksRequiredToSpawn.ToString();
             }
         }
         else

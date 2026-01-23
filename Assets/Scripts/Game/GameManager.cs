@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject m_endGameMenu;
+    [SerializeField] private GameObject m_pauseMenu;
 
     private TMPro.TextMeshProUGUI m_endGameText;
     private TMPro.TextMeshProUGUI m_levelText;
@@ -88,6 +89,10 @@ public class GameManager : MonoBehaviour
             }
 
             m_endGameMenu.SetActive(false);
+        }
+        if (m_pauseMenu != null)
+        {
+            m_pauseMenu.SetActive(false);
         }
     }
 
@@ -182,5 +187,31 @@ public class GameManager : MonoBehaviour
                           UnityEditor.EditorApplication.isPlaying = false;
 #endif
                       });
+    }
+
+    public void unPauseGame()
+    {
+        if (State == GameState.Paused)
+        {
+            State = GameState.Playing;
+            Time.timeScale = 1f;
+            if (m_pauseMenu != null)
+            {
+                m_pauseMenu.SetActive(false);
+            }
+        }
+    }
+
+    public void pauseGame()
+    {
+        if (State == GameState.Playing)
+        {
+            State = GameState.Paused;
+            Time.timeScale = 0f;
+            if (m_pauseMenu != null)
+            {
+                m_pauseMenu.SetActive(true);
+            }
+        }
     }
 }

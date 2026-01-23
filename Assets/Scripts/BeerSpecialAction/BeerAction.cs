@@ -6,7 +6,7 @@ public class BeerAction : MonoBehaviour, IPointerClickHandler
 {
 
     public Transform finalPoint;
-    public float speed = 0.000000005f;
+    public float speed = 1f;
     private AnimationManager manager;
     private bool isMoving = false;
     private Vector3 originalPosition;

@@ -13,6 +13,7 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
     private float m_lastAttackTime;
     private Rigidbody2D m_rb;
     private UnitController m_currentTarget;
+    private UnitController m_lockedTarget;
     private bool m_isDead = false;
 
     private float m_baseSpeed;
@@ -50,6 +51,11 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
     {
         if (m_isDead)
             return;
+
+        if (m_stats.unitType == UnitType.Pusher && m_lockedTarget == null && m_currentTarget != null)
+        {
+            m_currentTarget = null;
+        }
 
         if (CheckForTarget())
         {
@@ -105,10 +111,38 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 
         RaycastHit2D[] hits =
             Physics2D.RaycastAll(transform.position, m_direction, m_stats.attackRange, layerToDetection);
+
+        if (m_stats.unitType == UnitType.Pusher && m_lockedTarget != null)
+        {
+            foreach (var hit in hits)
+            {
+                if (hit.collider.gameObject == m_lockedTarget.gameObject)
+                {
+                    m_currentTarget = m_lockedTarget;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         foreach (var hit in hits)
         {
             if (hit.collider.gameObject != gameObject)
             {
+                if (m_stats.unitType == UnitType.Pusher)
+                {
+                    if (hit.collider.gameObject.layer == gameObject.layer)
+                        continue;
+
+                    m_lockedTarget = hit.collider.GetComponent<UnitController>();
+                    if (m_lockedTarget != null)
+                    {
+                        m_currentTarget = m_lockedTarget;
+                        return true;
+                    }
+                    continue;
+                }
+
                 m_currentTarget = hit.collider.GetComponent<UnitController>();
                 if (m_currentTarget != null)
                     return true;
@@ -127,17 +161,29 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
             return;
         }
 
-        if (m_stats.unitType == UnitType.Healer)
+        if (m_stats.unitType == UnitType.Pusher)
         {
-            if (m_currentTarget != null)
+            if (m_currentTarget != null && m_currentTarget == m_lockedTarget)
             {
-                if (m_currentTarget.gameObject.layer == gameObject.layer)
+                if (m_currentTarget.m_stats.unitType == UnitType.Base)
                 {
-                    m_currentTarget.Heal(m_stats.damage);
+                    Die();
+                    return;
                 }
-                else
+
+                m_currentTarget.TakeDamage(m_stats.damage);
+                m_currentTarget.ApplyEffect(SpecialEffect.Knockback, 0.4f, m_stats.effectValue, m_direction);
+
+                Collider2D[] nearby = Physics2D.OverlapCircleAll(m_currentTarget.transform.position, 1.5f);
+                foreach (var col in nearby)
                 {
-                    m_currentTarget.TakeDamage(m_stats.damage);
+                    UnitController uc = col.GetComponent<UnitController>();
+                    if (uc != null && uc.m_stats.unitType == UnitType.Base &&
+                        uc.gameObject.layer == m_currentTarget.gameObject.layer)
+                    {
+                        Die();
+                        return;
+                    }
                 }
             }
             return;
@@ -145,13 +191,39 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 
         if (m_currentTarget != null)
         {
-            m_currentTarget.TakeDamage(m_stats.damage);
-
-            if (m_stats.effectOnHit != SpecialEffect.None)
+            if (m_stats.projectilePrefab != null)
             {
-                m_currentTarget.ApplyEffect(
-                    m_stats.effectOnHit, m_stats.effectDuration, m_stats.effectValue, m_direction);
+                LaunchProjectile();
             }
+            else
+            {
+                if (m_stats.unitType == UnitType.Healer)
+                {
+                    if (m_currentTarget.gameObject.layer == gameObject.layer)
+                        m_currentTarget.Heal(m_stats.damage);
+                    else
+                        m_currentTarget.TakeDamage(m_stats.damage);
+                }
+                else
+                {
+                    m_currentTarget.TakeDamage(m_stats.damage);
+                    if (m_stats.effectOnHit != SpecialEffect.None)
+                    {
+                        m_currentTarget.ApplyEffect(
+                            m_stats.effectOnHit, m_stats.effectDuration, m_stats.effectValue, m_direction);
+                    }
+                }
+            }
+        }
+    }
+
+    void LaunchProjectile()
+    {
+        GameObject projObj = Instantiate(m_stats.projectilePrefab, transform.position, Quaternion.identity);
+        Projectile projScript = projObj.GetComponent<Projectile>();
+        if (projScript != null)
+        {
+            projScript.Setup(m_currentTarget, m_stats, m_direction);
         }
     }
 
@@ -322,6 +394,20 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(start, m_stats.explosionRadius);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (m_stats == null)
+            return;
+
+        if (m_stats.unitType == UnitType.Pusher)
+        {
+            UnitController other = collision.gameObject.GetComponent<UnitController>();
+            if (other != null && other != m_lockedTarget)
+            {
+                Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
+            }
         }
     }
 }

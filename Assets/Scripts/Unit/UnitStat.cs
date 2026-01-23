@@ -6,7 +6,8 @@ public enum UnitType
     SuicideBomber,
     Healer,
     Jumping,
-    Base
+    Base,
+    Pusher
 }
 
 public enum SpecialEffect
@@ -40,4 +41,7 @@ public class UnitStats : ScriptableObject
     [Header("Suicide Bomber")]
     public float explosionRadius;
     public AnimationCurve explosionDamageCurve;
+
+    [Header("Ranged")]
+    public GameObject projectilePrefab;
 }

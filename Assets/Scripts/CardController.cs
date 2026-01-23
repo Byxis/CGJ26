@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class CardController : MonoBehaviour
+public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     [Header("Data")]
     public UnitData unitData;
@@ -17,10 +18,66 @@ public class CardController : MonoBehaviour
     private Transform spawnPoint;
 
     private int _currentClicks = 0;
+    private bool _isPointerDown = false;
+    private float _clickTimer = 0f;
+    private float _holdTimer = 0f;
+    private bool _isAutoClicking = false;
+
+    private const float _clickInterval = 0.2f;  // 1/5 = 0.2
+    private const float _holdDelay = 1.0f;
 
     void Update()
     {
         transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * 2f, Time.deltaTime * 10f);
+
+        if (_isPointerDown)
+        {
+            if (!_isAutoClicking)
+            {
+                _holdTimer += Time.deltaTime;
+                if (_holdTimer >= _holdDelay)
+                {
+                    _isAutoClicking = true;
+                    _clickTimer = 0f;
+                }
+            }
+            else
+            {
+                _clickTimer += Time.deltaTime;
+                if (_clickTimer >= _clickInterval)
+                {
+                    OnCardClicked();
+                    _clickTimer = 0f;
+                }
+            }
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _isPointerDown = true;
+        _clickTimer = 0f;
+        _holdTimer = 0f;
+        _isAutoClicking = false;
+        OnCardClicked();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        ResetInput();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ResetInput();
+    }
+
+    private void ResetInput()
+    {
+        _isPointerDown = false;
+        _isAutoClicking = false;
+        _holdTimer = 0f;
+        _clickTimer = 0f;
     }
 
     void Start()

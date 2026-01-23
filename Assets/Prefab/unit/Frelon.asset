@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
+  m_Name: Frelon
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  unitName: Frelon
+  icon: {fileID: -4656658513182322354, guid: 851f4ad1dbce929d0a1cf86d74fa34cc, type: 3}
+  unitPrefab: {fileID: 8807403363010566803, guid: 294593c0321945275a6201c3f3558198, type: 3}
+  clicksRequiredToSpawn: 10

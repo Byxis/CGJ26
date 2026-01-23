@@ -377,8 +377,15 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 
         if (m_stats.unitType == UnitType.Base)
         {
-            Time.timeScale = 0f;
-            Debug.Log("GAME OVER - Base Detruite !");
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnBaseDestroyed(this);
+            }
+            else
+            {
+                Time.timeScale = 0f;
+                Debug.Log("GAME OVER - Base Detruite (GameManager manquant) !");
+            }
         }
 
         Destroy(gameObject);

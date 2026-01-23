@@ -4,7 +4,9 @@ public enum UnitType
 {
     Default,
     SuicideBomber,
-    Healer
+    Healer,
+    Jumping,
+    Base
 }
 
 public enum SpecialEffect

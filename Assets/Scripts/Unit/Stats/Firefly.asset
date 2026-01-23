@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
-  m_Name: Mantis
+  m_Name: Firefly
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  unitName: Mantis
-  maxHealth: 30
-  speed: 0.6
-  damage: 4
-  attackRange: 1.7
+  unitName: Firefly
+  maxHealth: 7
+  speed: 0.7
+  damage: 2
+  attackRange: 1
   attackCooldown: 5
   clickToSpawn: 0
-  unitType: 0
+  unitType: 2
   clickToKill: 0
-  effectOnHit: 3
-  effectDuration: 0
-  effectValue: 4
+  effectOnHit: 0
+  effectDuration: 1
+  effectValue: 0.6
   explosionRadius: 0
   explosionDamageCurve:
     serializedVersion: 2

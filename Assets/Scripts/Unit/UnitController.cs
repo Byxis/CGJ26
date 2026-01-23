@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class UnitController : MonoBehaviour, IPointerDownHandler
 {
     public UnitStats m_stats;
-    public LayerMask m_targetLayer;
+    private LayerMask m_targetLayer;
     private Vector2 m_direction = Vector2.right;
     public UnitHealthBar m_healthBar;
 
@@ -20,6 +20,7 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 
     private int m_clicksReceived = 0;
     private bool m_isKnockedBack = false;
+    private bool m_isJumping = false;
 
     void Start()
     {
@@ -36,14 +37,16 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
         if (LayerMask.LayerToName(gameObject.layer).Contains("Player"))
         {
             m_direction = Vector2.right;
+            m_targetLayer = LayerMask.GetMask("TeamEnemy");
         }
         else
         {
             m_direction = Vector2.left;
+            m_targetLayer = LayerMask.GetMask("TeamPlayer");
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (m_isDead)
             return;
@@ -64,26 +67,52 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 
     void Move()
     {
-        if (m_isKnockedBack)
+        if (m_isKnockedBack || m_stats.unitType == UnitType.Base)
             return;
 
-        m_rb.linearVelocity = m_direction * (m_baseSpeed * m_speedMultiplier);
+        if (m_stats.unitType == UnitType.Jumping)
+        {
+            if (!m_isJumping)
+            {
+                StartCoroutine(JumpRoutine());
+            }
+        }
+        else
+        {
+            m_rb.linearVelocity = m_direction * (m_baseSpeed * m_speedMultiplier);
+        }
     }
 
     void StopMoving()
     {
         if (m_isKnockedBack)
             return;
-        m_rb.linearVelocity = Vector2.zero;
+
+        if (m_stats.unitType != UnitType.Jumping)
+        {
+            m_rb.linearVelocity = Vector2.zero;
+        }
     }
 
     bool CheckForTarget()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, m_direction, m_stats.attackRange, m_targetLayer);
-        if (hit.collider != null)
+        int layerToDetection = m_targetLayer.value;
+
+        if (m_stats.unitType == UnitType.Healer)
         {
-            m_currentTarget = hit.collider.GetComponent<UnitController>();
-            return m_currentTarget != null;
+            layerToDetection |= (1 << gameObject.layer);
+        }
+
+        RaycastHit2D[] hits =
+            Physics2D.RaycastAll(transform.position, m_direction, m_stats.attackRange, layerToDetection);
+        foreach (var hit in hits)
+        {
+            if (hit.collider.gameObject != gameObject)
+            {
+                m_currentTarget = hit.collider.GetComponent<UnitController>();
+                if (m_currentTarget != null)
+                    return true;
+            }
         }
         return false;
     }
@@ -101,7 +130,16 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
         if (m_stats.unitType == UnitType.Healer)
         {
             if (m_currentTarget != null)
-                m_currentTarget.Heal(m_stats.damage);
+            {
+                if (m_currentTarget.gameObject.layer == gameObject.layer)
+                {
+                    m_currentTarget.Heal(m_stats.damage);
+                }
+                else
+                {
+                    m_currentTarget.TakeDamage(m_stats.damage);
+                }
+            }
             return;
         }
 
@@ -234,13 +272,34 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
         m_isKnockedBack = false;
     }
 
+    IEnumerator JumpRoutine()
+    {
+        m_isJumping = true;
+
+        Vector2 jumpDirection = (m_direction + Vector2.up).normalized;
+        m_rb.AddForce(jumpDirection * (m_baseSpeed * 1.5f), ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(0.5f);
+
+        yield return new WaitForSeconds(0.4f);
+
+        m_isJumping = false;
+    }
+
     void Die()
     {
         m_isDead = true;
+
+        if (m_stats.unitType == UnitType.Base)
+        {
+            Time.timeScale = 0f;
+            Debug.Log("GAME OVER - Base Detruite !");
+        }
+
         Destroy(gameObject);
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (m_stats == null)
             return;

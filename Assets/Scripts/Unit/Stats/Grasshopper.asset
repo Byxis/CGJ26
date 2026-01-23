@@ -10,42 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
-  m_Name: Hornet
+  m_Name: Grasshopper
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  unitName: Hornet
+  unitName: Grasshopper
   maxHealth: 30
-  speed: 4
+  speed: 2.5
   damage: 5
-  attackRange: 1
-  attackCooldown: 1.5
+  attackRange: 0.74
+  attackCooldown: 5
   clickToSpawn: 0
-  unitType: 1
-  clickToKill: 10
-  effectOnHit: 3
+  unitType: 3
+  clickToKill: 0
+  effectOnHit: 0
   effectDuration: 0
-  effectValue: 3
-  explosionRadius: 5
+  effectValue: 4
+  explosionRadius: 0
   explosionDamageCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1.0033302
-      value: 0
-      inSlope: -1.9732187
-      outSlope: -1.9732187
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.16267972
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

@@ -108,9 +108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitController
   m_stats: {fileID: 11400000, guid: b06a5f647f648094abce02bcad6995bc, type: 2}
-  m_targetLayer:
-    serializedVersion: 2
-    m_Bits: 128
   m_healthBar: {fileID: 512268344867373724}
 --- !u!50 &7380318541326321774
 Rigidbody2D:
@@ -138,7 +135,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &6805857105374227848
 BoxCollider2D:
   m_ObjectHideFlags: 0

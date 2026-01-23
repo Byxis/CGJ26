@@ -20,9 +20,8 @@ public enum SpecialEffect
 }
 
 [CreateAssetMenu(fileName = "NewUnit", menuName = "BattleSystem/UnitStats")]
-public class UnitStats : ScriptableObject
+public class UnitStats : BaseCard
 {
-    public string unitName;
     public float maxHealth;
     public float speed;
     public float damage;

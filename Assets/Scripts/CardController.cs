@@ -11,6 +11,7 @@ public class CardController : MonoBehaviour
     public Slider progressSlider;
     public Image fillImage;
     public Gradient progressColor;
+    public int clicksRequiredToSpawn;
 
     [Header("Autre")]
     private Transform spawnPoint;

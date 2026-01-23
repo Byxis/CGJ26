@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
-  m_Name: Firefly
+  m_Name: Grasshopper
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  unitName: Firefly
-  maxHealth: 7
-  speed: 0.7
-  damage: 2
-  attackRange: 1
+  cardName: Grasshopper
+  cost: 5
+  maxHealth: 10
+  speed: 2.5
+  damage: 5
+  attackRange: 0.74
   attackCooldown: 5
-  unitType: 2
+  unitType: 3
   clickToKill: 0
   effectOnHit: 0
-  effectDuration: 1
-  effectValue: 0.6
+  effectDuration: 0
+  effectValue: 4
   explosionRadius: 0
   explosionDamageCurve:
     serializedVersion: 2
@@ -30,6 +31,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  projectilePrefab: {fileID: 8391138026608434301, guid: 3b6b7236514873440a24a31db79f4aca, type: 3}
+  projectilePrefab: {fileID: 0}
   invocablePrefab: {fileID: 0}
   numberOfInvocable: 0

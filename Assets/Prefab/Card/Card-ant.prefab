@@ -97,6 +97,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9214716043730104999, guid: 5aee4fde3568c99458661505253c8f6e, type: 3}
+      propertyPath: unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c16bff57e9dad084e84c92ebfd7ca5d4, type: 2}
+    - target: {fileID: 9214716043730104999, guid: 5aee4fde3568c99458661505253c8f6e, type: 3}
       propertyPath: click_to_spawn
       value: 1
       objectReference: {fileID: 0}

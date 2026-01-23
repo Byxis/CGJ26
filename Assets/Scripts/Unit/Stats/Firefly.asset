@@ -18,7 +18,6 @@ MonoBehaviour:
   damage: 2
   attackRange: 1
   attackCooldown: 5
-  clickToSpawn: 0
   unitType: 2
   clickToKill: 0
   effectOnHit: 0
@@ -31,3 +30,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  projectilePrefab: {fileID: 8391138026608434301, guid: 3b6b7236514873440a24a31db79f4aca, type: 3}
+  invocablePrefab: {fileID: 0}
+  numberOfInvocable: 0

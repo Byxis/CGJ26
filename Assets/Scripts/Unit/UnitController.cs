@@ -4,10 +4,12 @@ using UnityEngine.EventSystems;
 
 public class UnitController : MonoBehaviour, IPointerDownHandler
 {
-    public UnitStats m_stats;
+    [SerializeField]
+    private UnitStats m_stats;
+    [SerializeField]
+    private UnitHealthBar m_healthBar;
     private LayerMask m_targetLayer;
     private Vector2 m_direction = Vector2.right;
-    public UnitHealthBar m_healthBar;
 
     private float m_currentHealth;
     private float m_lastAttackTime;
@@ -143,9 +145,16 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
                     continue;
                 }
 
-                m_currentTarget = hit.collider.GetComponent<UnitController>();
-                if (m_currentTarget != null)
+                UnitController target = hit.collider.GetComponent<UnitController>();
+                if (target != null)
+                {
+                    if (m_stats.unitType == UnitType.Healer && target.m_stats.unitType == UnitType.Base &&
+                        target.gameObject.layer == gameObject.layer)
+                        continue;
+
+                    m_currentTarget = target;
                     return true;
+                }
             }
         }
         return false;
@@ -186,6 +195,12 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
                     }
                 }
             }
+            return;
+        }
+
+        if (m_stats.unitType == UnitType.Summoner)
+        {
+            InvokeUnit();
             return;
         }
 
@@ -283,8 +298,6 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
             m_healthBar.UpdateHealthBar(m_currentHealth, m_stats.maxHealth);
         if (m_currentHealth <= 0)
             Die();
-
-        Debug.Log("TakeDamage: " + _amount);
     }
 
     public void Heal(float _amount)
@@ -364,8 +377,15 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 
         if (m_stats.unitType == UnitType.Base)
         {
-            Time.timeScale = 0f;
-            Debug.Log("GAME OVER - Base Detruite !");
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnBaseDestroyed(this);
+            }
+            else
+            {
+                Time.timeScale = 0f;
+                Debug.Log("GAME OVER - Base Detruite (GameManager manquant) !");
+            }
         }
 
         Destroy(gameObject);
@@ -407,6 +427,21 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
             if (other != null && other != m_lockedTarget)
             {
                 Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
+            }
+        }
+    }
+
+    void InvokeUnit()
+    {
+        if (m_stats.invocablePrefab != null)
+        {
+            float offset = -2f;
+            for (int i = 0; i < m_stats.numberOfInvocable; i++)
+            {
+                GameObject g = Instantiate(m_stats.invocablePrefab, transform.position, Quaternion.identity);
+                g.layer = gameObject.layer;
+                g.transform.position = transform.position + new Vector3(offset, 0, 0);
+                offset += 0.5f;
             }
         }
     }

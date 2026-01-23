@@ -9,12 +9,10 @@ public class CardController : MonoBehaviour
     public Image fillImage;        
     public Gradient progressColor; 
 
-    [Header("Settings")]
-    public Transform spawnPoint;   // Glisse un objet vide "SpawnPoint" de ta scène ici
-    
     [Header("Autre")]
     public GameObject unitController;
     public int click_to_spawn;
+    private Transform spawnPoint;
 
     private int _currentClicks = 0;
 
@@ -25,6 +23,8 @@ public class CardController : MonoBehaviour
 
     void Start()
     {
+        this.spawnPoint = this.GetComponentInParent<DeckPanel>().spawnPoint;
+
         if (progressSlider != null)
         {
             progressSlider.minValue = 0;

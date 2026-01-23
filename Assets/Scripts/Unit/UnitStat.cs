@@ -7,7 +7,8 @@ public enum UnitType
     Healer,
     Jumping,
     Base,
-    Pusher
+    Pusher,
+    Summoner
 }
 
 public enum SpecialEffect
@@ -43,4 +44,8 @@ public class UnitStats : ScriptableObject
 
     [Header("Ranged")]
     public GameObject projectilePrefab;
+
+    [Header("Invocable")]
+    public GameObject invocablePrefab;
+    public int numberOfInvocable;
 }

@@ -145,9 +145,16 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
                     continue;
                 }
 
-                m_currentTarget = hit.collider.GetComponent<UnitController>();
-                if (m_currentTarget != null)
+                UnitController target = hit.collider.GetComponent<UnitController>();
+                if (target != null)
+                {
+                    if (m_stats.unitType == UnitType.Healer && target.m_stats.unitType == UnitType.Base &&
+                        target.gameObject.layer == gameObject.layer)
+                        continue;
+
+                    m_currentTarget = target;
                     return true;
+                }
             }
         }
         return false;
@@ -188,6 +195,12 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
                     }
                 }
             }
+            return;
+        }
+
+        if (m_stats.unitType == UnitType.Summoner)
+        {
+            InvokeUnit();
             return;
         }
 
@@ -407,6 +420,21 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
             if (other != null && other != m_lockedTarget)
             {
                 Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
+            }
+        }
+    }
+
+    void InvokeUnit()
+    {
+        if (m_stats.invocablePrefab != null)
+        {
+            float offset = -2f;
+            for (int i = 0; i < m_stats.numberOfInvocable; i++)
+            {
+                GameObject g = Instantiate(m_stats.invocablePrefab, transform.position, Quaternion.identity);
+                g.layer = gameObject.layer;
+                g.transform.position = transform.position + new Vector3(offset, 0, 0);
+                offset += 0.5f;
             }
         }
     }

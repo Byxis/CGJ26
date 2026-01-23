@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7128707004824109692, guid: 5aee4fde3568c99458661505253c8f6e, type: 3}
       propertyPath: m_Name
-      value: Card-mantis
+      value: Card-DungBeetle
       objectReference: {fileID: 0}
     - target: {fileID: 8310223530064962503, guid: 5aee4fde3568c99458661505253c8f6e, type: 3}
       propertyPath: m_Pivot.x
@@ -99,15 +99,15 @@ PrefabInstance:
     - target: {fileID: 9214716043730104999, guid: 5aee4fde3568c99458661505253c8f6e, type: 3}
       propertyPath: unitData
       value: 
-      objectReference: {fileID: 11400000, guid: e387e4185d3a62f429b5f685e3d38310, type: 2}
+      objectReference: {fileID: 11400000, guid: 6c36b134dd7fb2e499b59fe11039b6c0, type: 2}
     - target: {fileID: 9214716043730104999, guid: 5aee4fde3568c99458661505253c8f6e, type: 3}
       propertyPath: click_to_spawn
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9214716043730104999, guid: 5aee4fde3568c99458661505253c8f6e, type: 3}
       propertyPath: unitController
       value: 
-      objectReference: {fileID: 6469990257173976888, guid: 86c5853b80e7ffb499482a225d30039c, type: 3}
+      objectReference: {fileID: 2443796964055119923, guid: 1789cbe52dd8d2445b7cda8723c51a52, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

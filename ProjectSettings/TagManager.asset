@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - AntEnd
   - ScarabeeEnd
+  - AntEnd
   layers:
   - Default
   - TransparentFX
@@ -43,31 +43,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1493929083
+    locked: 0
   - name: Bar
-    uniqueID: 1280877789
+    uniqueID: 2554758539
+    locked: 0
+  - name: Door
+    uniqueID: 1919217857
     locked: 0
   - name: Buttons
-    uniqueID: 2095011169
+    uniqueID: 3586514245
     locked: 0
   - name: Scarabee
-    uniqueID: 99979113
+    uniqueID: 1503220279
     locked: 0
   - name: Ants
-    uniqueID: 4189993307
+    uniqueID: 525232421
     locked: 0
-  - name: Spider
-    uniqueID: 3963232721
-    locked: 0
-  - name: Opened Menu
-    uniqueID: 4020126841
+  - name: UI
+    uniqueID: 1500727645
     locked: 0
   m_RenderingLayers:
   - Default
-  - Ants
-  - Layer 2
-  - Layer 3
-  - Scarabee
-  - Layer 5
-  - Layer 6
-  - Bar
-  - Layer 8

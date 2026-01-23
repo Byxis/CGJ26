@@ -10,16 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
-  m_Name: Ant
+  m_Name: Mantis
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  unitName: Ant
-  maxHealth: 5
-  speed: 1
-  damage: 1
-  attackRange: 1
-  attackCooldown: 1
+  unitName: Mantis
+  maxHealth: 30
+  speed: 0.6
+  damage: 4
+  attackRange: 3
+  attackCooldown: 5
+  clickToSpawn: 0
   unitType: 0
   clickToKill: 0
-  effectOnHit: 0
+  effectOnHit: 3
   effectDuration: 0
-  effectValue: 1
+  effectValue: 4
+  explosionRadius: 0
+  explosionDamageCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

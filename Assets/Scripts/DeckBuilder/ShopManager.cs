@@ -7,7 +7,8 @@ using System.Collections.Generic;
 public class ShopManager : MonoBehaviour
 {
     [Header("Configuration")]
-    public string resourcesPath = "CardPool"; 
+    public string unitResourcesPath = "UnitCardPool"; 
+    public string upgradeResourcesPath = "UpgradeCardPool";
 
     [Header("UI References")]
     public TextMeshProUGUI goldText;      // Drag Gold Text here
@@ -16,15 +17,16 @@ public class ShopManager : MonoBehaviour
     
     [Header("Prefabs")]
     public GameObject shopSlotPrefab; 
-    public GameObject realCardPrefab; 
+    public GameObject unitCardPrefab;     // FORMERLY realCardPrefab
+    public GameObject upgradeCardPrefab;  // NEW
 
     [Header("References")]
     public DeckManager deckManager; // (Or HandManager, whichever you are using)
 
-    private CardData[] fullCardPool; 
+    private BaseCard[] fullCardPool; 
 
     [Header("Economy")]
-    public int startingGold = 10;
+    public int startingGold = 100;
     public int rerollCost = 2;
     public int currentGold;
 
@@ -45,9 +47,18 @@ public class ShopManager : MonoBehaviour
             if (btnText != null) btnText.text = $"Reroll ({rerollCost}g)";
         }
 
-        // 3. Load Cards
-        fullCardPool = Resources.LoadAll<CardData>(resourcesPath);
-        if (fullCardPool.Length == 0) Debug.LogError("No cards found! Check 'Resources/CardPool' folder name.");
+        // 3. Load Cards (Load both pools and merge)
+        var units = Resources.LoadAll<BaseCard>(unitResourcesPath);
+        var upgrades = Resources.LoadAll<BaseCard>(upgradeResourcesPath);
+        
+        // Merge arrays
+        List<BaseCard> mergedList = new List<BaseCard>();
+        if(units != null) mergedList.AddRange(units);
+        if(upgrades != null) mergedList.AddRange(upgrades);
+        
+        fullCardPool = mergedList.ToArray();
+
+        if (fullCardPool.Length == 0) Debug.LogError($"No cards found! Check Resources folders: '{unitResourcesPath}' and '{upgradeResourcesPath}'");
 
         // 4. Free Reroll on Start
         PerformReroll(); 
@@ -89,13 +100,17 @@ public class ShopManager : MonoBehaviour
         {
             if (fullCardPool.Length == 0) break;
 
-            CardData randomData = fullCardPool[Random.Range(0, fullCardPool.Length)];
+            BaseCard randomData = fullCardPool[Random.Range(0, fullCardPool.Length)];
             GameObject newSlotObj = Instantiate(shopSlotPrefab, shopContainer);
             
             ShopSlot newSlotScript = newSlotObj.GetComponent<ShopSlot>();
             if (newSlotScript != null)
             {
-                newSlotScript.Initialize(randomData, realCardPrefab, this);
+                // CHOOSE PREFAB BASED ON TYPE
+                GameObject prefabToUse = unitCardPrefab;
+                if (randomData is UpgradeCard) prefabToUse = upgradeCardPrefab;
+
+                newSlotScript.Initialize(randomData, prefabToUse, this);
             }
         }
 
@@ -111,7 +126,7 @@ public class ShopManager : MonoBehaviour
     }
 
     // --- BUY LOGIC ---
-    public void TryBuyCard(CardData card, GameObject slotObject)
+    public void TryBuyCard(BaseCard card, GameObject slotObject)
     {
         // Check if player can afford the card
         if (currentGold >= card.cost)

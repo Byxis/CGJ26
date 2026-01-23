@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 354.79, y: -312.40213}
+  m_AnchoredPosition: {x: 733, y: 306.82}
   m_SizeDelta: {x: 210.42, y: 207.5254}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &74687050
@@ -524,7 +524,6 @@ GameObject:
   m_Component:
   - component: {fileID: 473444148}
   - component: {fileID: 473444147}
-  - component: {fileID: 473444149}
   m_Layer: 0
   m_Name: ShopManager
   m_TagString: Untagged
@@ -549,7 +548,8 @@ MonoBehaviour:
   rerollButton: {fileID: 74687050}
   shopContainer: {fileID: 698914987}
   shopSlotPrefab: {fileID: 3641347301135697674, guid: c58d1d957ac217743bdaf974442d0732, type: 3}
-  realCardPrefab: {fileID: 4317321460587603728, guid: 044aeedc9b044f74080feb299f1952aa, type: 3}
+  unitCardPrefab: {fileID: 4317321460587603728, guid: 044aeedc9b044f74080feb299f1952aa, type: 3}
+  upgradeCardPrefab: {fileID: 4317321460587603728, guid: 8ef5a6f65389fab48836574fa1bcac16, type: 3}
   deckManager: {fileID: 1578506142}
   startingGold: 100
   rerollCost: 2
@@ -573,32 +573,6 @@ RectTransform:
   m_AnchoredPosition: {x: 267.87192, y: 193.7769}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &473444149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473444146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 10
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &511010632
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,8 +755,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 550.83, y: 231.23999}
-  m_SizeDelta: {x: 818.34, y: 617.52}
+  m_AnchoredPosition: {x: 707.59, y: -233.18}
+  m_SizeDelta: {x: 504.83, y: 613.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &596500988
 MonoBehaviour:
@@ -834,8 +808,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f509ea4ea8e5da44e9b5cbda6f1e4926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
-  cardDisplayprefab: {fileID: 0}
-  deckArea: {fileID: 0}
+  unitCardPrefab: {fileID: 4317321460587603728, guid: 044aeedc9b044f74080feb299f1952aa, type: 3}
+  upgradeCardPrefab: {fileID: 4317321460587603728, guid: 8ef5a6f65389fab48836574fa1bcac16, type: 3}
+  deckArea: {fileID: 1078411921}
   deckData: []
 --- !u!114 &596500991
 MonoBehaviour:
@@ -887,9 +862,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -355.22998, y: -308.76}
-  m_SizeDelta: {x: 1209.6, y: 462.48}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -206.6, y: 270.96}
+  m_SizeDelta: {x: 1506.8, y: 466.3646}
+  m_Pivot: {x: 0.5, y: 0.42311645}
 --- !u!114 &698914988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -967,13 +942,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopManager
   resourcesPath: CardPool
-  goldText: {fileID: 0}
-  rerollButton: {fileID: 0}
+  goldText: {fileID: 1888803775}
+  rerollButton: {fileID: 74687050}
   shopContainer: {fileID: 698914987}
   shopSlotPrefab: {fileID: 3641347301135697674, guid: c58d1d957ac217743bdaf974442d0732, type: 3}
-  realCardPrefab: {fileID: 4317321460587603728, guid: 044aeedc9b044f74080feb299f1952aa, type: 3}
+  unitCardPrefab: {fileID: 4317321460587603728, guid: 044aeedc9b044f74080feb299f1952aa, type: 3}
+  upgradeCardPrefab: {fileID: 4317321460587603728, guid: 8ef5a6f65389fab48836574fa1bcac16, type: 3}
   deckManager: {fileID: 1578506142}
-  startingGold: 10
+  startingGold: 100
   rerollCost: 2
   currentGold: 0
 --- !u!1 &982330522
@@ -1095,8 +1071,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 551.4459, y: -308.761}
-  m_SizeDelta: {x: 1102.8918, y: 617.522}
+  m_AnchoredPosition: {x: 960.00757, y: -773.18}
+  m_SizeDelta: {x: 920.07, y: 613.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1078411922
 MonoBehaviour:
@@ -1211,7 +1187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f509ea4ea8e5da44e9b5cbda6f1e4926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
-  cardDisplayprefab: {fileID: 4317321460587603728, guid: 044aeedc9b044f74080feb299f1952aa, type: 3}
+  unitCardPrefab: {fileID: 0}
+  upgradeCardPrefab: {fileID: 0}
   deckArea: {fileID: 1078411921}
   deckData: []
 --- !u!114 &1078411929
@@ -1266,8 +1243,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -250.00464, y: -848.761}
-  m_SizeDelta: {x: 500, y: 462.478}
+  m_AnchoredPosition: {x: -1670, y: -840.87}
+  m_SizeDelta: {x: 500, y: 478.26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1141381726
 MonoBehaviour:
@@ -1411,13 +1388,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f509ea4ea8e5da44e9b5cbda6f1e4926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
-  cardDisplayprefab: {fileID: 4317321460587603728, guid: 044aeedc9b044f74080feb299f1952aa, type: 3}
+  unitCardPrefab: {fileID: 4317321460587603728, guid: 044aeedc9b044f74080feb299f1952aa, type: 3}
+  upgradeCardPrefab: {fileID: 4317321460587603728, guid: 8ef5a6f65389fab48836574fa1bcac16, type: 3}
   deckArea: {fileID: 1078411921}
   deckData:
-  - {fileID: 11400000, guid: 14192d4a89d6f8a49841d7bd25e11971, type: 2}
-  - {fileID: 11400000, guid: 436faed24da92ae4090a2298174b953c, type: 2}
-  - {fileID: 11400000, guid: 156e78abab5c539469a5d52d0d8bbdf0, type: 2}
-  - {fileID: 11400000, guid: fc07def3ff797c443a62c4a92e392cfb, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!224 &1578506143
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1471,8 +1449,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -451.45, y: 283.76}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -292.00003, y: -0.0000038146973}
+  m_SizeDelta: {x: 200, y: 51.859}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1888803775
 MonoBehaviour:

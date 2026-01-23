@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
   m_Name: Hornet
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  unitName: Hornet
+  cardName: Hornet
+  cost: 3
   maxHealth: 30
   speed: 4
   damage: 5
   attackRange: 1
   attackCooldown: 1.5
-  clickToSpawn: 0
   unitType: 1
   clickToKill: 10
   effectOnHit: 3
@@ -49,3 +49,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  projectilePrefab: {fileID: 0}
+  invocablePrefab: {fileID: 0}
+  numberOfInvocable: 0

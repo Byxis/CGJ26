@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
-  m_Name: DungBeetle
+  m_Name: Scorpion
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  unitName: DungBeetle
-  maxHealth: 80
-  speed: 0.7
-  damage: 0.5
-  attackRange: 2
-  attackCooldown: 0.4
-  clickToSpawn: 0
-  unitType: 5
+  cardName: Scorpion
+  cost: 5
+  maxHealth: 20
+  speed: 0.9
+  damage: 3
+  attackRange: 0.8
+  attackCooldown: 1.5
+  unitType: 0
   clickToKill: 0
-  effectOnHit: 0
+  effectOnHit: 1
   effectDuration: 1
-  effectValue: 2
+  effectValue: 4
   explosionRadius: 0
   explosionDamageCurve:
     serializedVersion: 2
@@ -31,3 +31,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  projectilePrefab: {fileID: 0}
+  invocablePrefab: {fileID: 0}
+  numberOfInvocable: 0

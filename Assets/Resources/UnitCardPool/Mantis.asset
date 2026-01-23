@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
-  m_Name: Grasshopper
+  m_Name: Mantis
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  unitName: Grasshopper
-  maxHealth: 10
-  speed: 2.5
-  damage: 5
-  attackRange: 0.74
+  cardName: Mantis
+  cost: 5
+  maxHealth: 30
+  speed: 0.6
+  damage: 4
+  attackRange: 1.7
   attackCooldown: 5
-  unitType: 3
+  unitType: 0
   clickToKill: 0
-  effectOnHit: 0
+  effectOnHit: 3
   effectDuration: 0
   effectValue: 4
   explosionRadius: 0
@@ -31,3 +32,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   projectilePrefab: {fileID: 0}
+  invocablePrefab: {fileID: 0}
+  numberOfInvocable: 0

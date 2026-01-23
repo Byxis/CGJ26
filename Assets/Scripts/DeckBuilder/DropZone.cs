@@ -6,6 +6,7 @@ public class DropZone : MonoBehaviour, IDropHandler
     [Header("Settings")]
     public int maxCapacity = 20; 
     public string zoneName = "Zone";
+    public bool allowUpgrades = true; // Default to true, disable for HandArea
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -17,6 +18,17 @@ public class DropZone : MonoBehaviour, IDropHandler
             
             if (draggable != null)
             {
+                // Check if UpgradeCards are allowed here
+                if (!allowUpgrades)
+                {
+                     BaseCardDisplay display = draggedCard.GetComponent<BaseCardDisplay>();
+                     if (display != null && display.CardData is UpgradeCard)
+                     {
+                         Debug.Log($"{zoneName} does not accept Upgrades.");
+                         return; 
+                     }
+                }
+
                 if (transform.childCount >= maxCapacity)
                 {
                     Debug.Log($"{zoneName} is Full!");

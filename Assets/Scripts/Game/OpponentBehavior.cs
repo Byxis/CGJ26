@@ -83,7 +83,6 @@ public class OpponentBehavior : MonoBehaviour
 
         if (opponentBase == null)
         {
-            // TODO: Logique de changement de niveau ou Game Over
             isLevelActive = false;
             return;
         }

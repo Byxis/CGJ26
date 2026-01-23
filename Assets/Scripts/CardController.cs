@@ -1,70 +1,101 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Si vous utilisez TextMeshPro pour le texte (optionnel)
 
 public class CardController : MonoBehaviour
 {
     [Header("UI Linking")]
-    public Image iconImage;       // Lier l'Image "Icon" ici
-    public Slider progressSlider; // Lier le Slider "ClickGauge" ici
-    // public TextMeshProUGUI costText; // Décommenter si vous voulez afficher le texte
+    public Image iconImage;
+    public Slider progressSlider;
+    public Image fillImage;        
+    public Gradient progressColor; 
 
-    [Header("Data (A remplir manuellement ou par code)")]
-    public UnitData unitData;     // Glissez votre ScriptableObject ici (Soldat, Tank...)
-    public Transform spawnPoint;  // L'endroit où l'unité va apparaître dans le monde
+    [Header("Settings")]
+    public Transform spawnPoint;   // Glisse un objet vide "SpawnPoint" de ta scène ici
+    
+    [Header("Debug/Test")]
+    public UnitData testData;      // Permet de tester sans attendre le Manager
 
     private int _currentClicks = 0;
+    private UnitData _data;
 
     void Start()
     {
-        // Initialisation visuelle au lancement du jeu
-        if(unitData != null)
+        // Si tu as mis une carte de test dans l'inspecteur, on l'initialise
+        if (testData != null)
         {
-            SetupCard();
+            Initialize(testData);
         }
     }
 
-    void SetupCard()
+    void Update()
     {
-        // On met à jour l'image
-        iconImage.sprite = unitData.icon;
-        
-        // On configure la jauge
-        progressSlider.maxValue = unitData.clicksRequiredToSpawn;
-        progressSlider.value = 0;
-        _currentClicks = 0;
+        // Effet de rebond : revient à la taille 2 progressivement
+        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * 2f, Time.deltaTime * 10f);
     }
 
-    // Cette fonction sera appelée quand on clique sur le bouton
-    public void OnClick()
+    public void Initialize(UnitData data)
     {
-        // 1. On incrémente
+        _data = data;
+        
+        if (_data == null) return;
+
+        iconImage.sprite = _data.icon;
+        progressSlider.maxValue = _data.clicksRequiredToSpawn;
+        progressSlider.value = 0;
+        _currentClicks = 0;
+        
+        UpdateVisuals();
+    }
+
+    public void OnCardClicked()
+    {
+        // Sécurité : si aucune donnée n'est chargée, on ne fait rien
+        if (_data == null) 
+        {
+            Debug.LogWarning("La carte n'a pas de UnitData !");
+            return;
+        }
+
+        Debug.Log("Clic sur : " + _data.unitName);
+        
+        // Effet visuel de clic (grossissement)
+        transform.localScale = Vector3.one * 2.3f;
+        
         _currentClicks++;
+        UpdateVisuals();
 
-        // 2. Mise à jour visuelle immédiate
-        progressSlider.value = _currentClicks;
-
-        // 3. Vérification : est-ce qu'on a atteint le but ?
-        if (_currentClicks >= unitData.clicksRequiredToSpawn)
+        if (_currentClicks >= _data.clicksRequiredToSpawn)
         {
             SpawnUnit();
         }
     }
 
-    void SpawnUnit()
+    private void UpdateVisuals()
     {
-        // Instancier le prefab de l'unité à la position du spawnPoint
-        if (unitData.unitPrefab != null && spawnPoint != null)
+        if (progressSlider == null || fillImage == null) return;
+
+        progressSlider.value = _currentClicks;
+
+        // Calcul du ratio (0 à 1) pour le dégradé
+        float normalizedValue = (float)_currentClicks / _data.clicksRequiredToSpawn;
+        fillImage.color = progressColor.Evaluate(normalizedValue);
+    }
+
+    private void SpawnUnit()
+    {
+        if (_data.unitPrefab != null && spawnPoint != null)
         {
-            Instantiate(unitData.unitPrefab, spawnPoint.position, Quaternion.identity);
+            // Apparition de l'unité
+            Instantiate(_data.unitPrefab, spawnPoint.position, Quaternion.identity);
+            Debug.Log("UNITÉ SPAWN !");
         }
         else
         {
-            Debug.LogError("Il manque le Prefab ou le SpawnPoint sur la carte !");
+            Debug.LogError("Spawn impossible : Prefab ou SpawnPoint manquant sur " + gameObject.name);
         }
 
-        // Reset de la carte après le spawn
+        // Reset
         _currentClicks = 0;
-        progressSlider.value = 0;
+        UpdateVisuals();
     }
 }

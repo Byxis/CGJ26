@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 1592953175859791428}
   - component: {fileID: 7944927385655080529}
   - component: {fileID: 5770431848183744924}
+  - component: {fileID: 987644726637002838}
   m_Layer: 5
   m_Name: DeckPanel
   m_TagString: Untagged
@@ -173,3 +174,16 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &987644726637002838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5202513729759502541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1925a318389ad6febb8241b1fd9325d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeckPanel
+  spawnPoint: {fileID: 0}

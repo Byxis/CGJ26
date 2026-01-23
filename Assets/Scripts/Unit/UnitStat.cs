@@ -27,7 +27,6 @@ public class UnitStats : ScriptableObject
     public float damage;
     public float attackRange;
     public float attackCooldown;
-    public float clickToSpawn;
 
     [Header("Special")]
     public UnitType unitType;

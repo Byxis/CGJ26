@@ -4,10 +4,12 @@ using UnityEngine.EventSystems;
 
 public class UnitController : MonoBehaviour, IPointerDownHandler
 {
-    public UnitStats m_stats;
+    [SerializeField]
+    private UnitStats m_stats;
+    [SerializeField]
+    private UnitHealthBar m_healthBar;
     private LayerMask m_targetLayer;
     private Vector2 m_direction = Vector2.right;
-    public UnitHealthBar m_healthBar;
 
     private float m_currentHealth;
     private float m_lastAttackTime;

@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public GameObject exitBg;
 
     public GameObject backBg;
+
+    public Animator animator;
     
     private string currentButtonName = "";
 
@@ -45,7 +47,7 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
                     break;
                 case "BackButton":
                     leaderBoardPanel.SetActive(false);
-                    bvrir le sujet en direct sur Twitch et commencer votre Brainstorming d'équipe sur Discord.reak;
+                    break;
                 default:
                     Debug.Log("Unknown button clicked: " + buttonName);
                     break;
@@ -109,8 +111,15 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     public void onStartPressed()
     {
+        if (animator != null)
+        {
+            animator.SetTrigger("StartGame");
+        }
+    }
+
+    public void OpenGame() {
         Debug.Log("Start button pressed");
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Alexis");
     }
 
     public void onLeaderBoardPressed()

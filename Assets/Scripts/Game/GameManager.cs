@@ -47,11 +47,45 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
-        m_endGameMenu = GameObject.FindGameObjectWithTag("EndPanel");
-
         m_leaderboard = FindFirstObjectByType<SaveDataBase>();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        string sceneName = scene.name;
+        if (sceneName == "Alexis" || sceneName == "Game")
+        {
+            ResetAndStartLevel(0);
+        }
+    }
+
+    private void InitializeEndGameMenu()
+    {
+        // Search for EndPanel even if it's inactive
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.CompareTag("EndPanel") && obj.scene.isLoaded)
+            {
+                m_endGameMenu = obj;
+                break;
+            }
+        }
+
+        Debug.Log("InitializeEndGameMenu: EndPanel found = " + (m_endGameMenu != null));
 
         if (m_endGameMenu != null)
         {
@@ -96,21 +130,9 @@ public class GameManager : MonoBehaviour
 
             if (m_inputField != null)
             {
+                m_inputField.onValueChanged.RemoveAllListeners();
                 m_inputField.onValueChanged.AddListener(ValidateInput);
             }
-
-            m_endGameMenu.SetActive(false);
-        }
-        string sceneName = SceneManager.GetActiveScene().name;
-        if (sceneName == "Alexis" || sceneName == "Game")
-        {
-            ResetAndStartLevel(0);
-        }
-
-        GameObject m_pauseMenu = GameObject.FindGameObjectWithTag("PausePanel");
-        if (m_pauseMenu != null)
-        {
-            m_pauseMenu.SetActive(false);
         }
     }
 
@@ -124,6 +146,7 @@ public class GameManager : MonoBehaviour
 
     public void OnBaseDestroyed(UnitController baseUnit)
     {
+        Debug.Log($"[GameManager] OnBaseDestroyed called! State = {State}, baseUnit = {baseUnit.gameObject.name}");
         if (State != GameState.Playing)
             return;
 
@@ -137,10 +160,7 @@ public class GameManager : MonoBehaviour
             Inventaire.Instance.ApplyVictoryBonus();
         }
 
-        if (m_endGameMenu == null)
-            m_endGameMenu = GameObject.FindGameObjectWithTag("EndPanel");
-
-        UnityEngine.Debug.Log("End game menu found: " + (m_endGameMenu != null));
+        InitializeEndGameMenu();
 
         if (m_endGameMenu != null)
         {
@@ -253,6 +273,4 @@ public class GameManager : MonoBehaviour
 #endif
                       });
     }
-
-    
 }

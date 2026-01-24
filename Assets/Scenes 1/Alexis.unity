@@ -230,6 +230,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1676215849504397719, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: m_Name
+      value: EndPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676215849504397719, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

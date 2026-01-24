@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 942a80b82ead3e6a4aa7def990bfa7a2
+guid: 81d6e18bee8c48fc0ac6bfaa145dac4b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4781373940957465942
-    second: exit_0
+      213: 281984326749951210
+    second: feteDuClick9_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: exit_0
+      name: feteDuClick9_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 256
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aa2bbe6cbb525adb0800000000000000
-      internalID: -4781373940957465942
+      spriteID: ae4982c404fc9e300800000000000000
+      internalID: 281984326749951210
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      exit_0: -4781373940957465942
+      feteDuClick9_0: 281984326749951210
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

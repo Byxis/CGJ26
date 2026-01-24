@@ -64,6 +64,12 @@ public class OpponentBehavior : MonoBehaviour
             isLevelActive = false;
             return;
         }
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (sceneName != "Alexis" && sceneName != "Game")
+        {
+            isLevelActive = false;
+            return;
+        }
 
         StartLevel(0);
     }

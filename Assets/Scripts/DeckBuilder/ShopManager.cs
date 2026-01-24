@@ -14,6 +14,7 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI goldText;      // Drag Gold Text here
     public Button rerollButton;           // Drag Reroll Button here
     public Transform shopContainer;       // Drag Shop Panel here
+
     
     [Header("Prefabs")]
     public GameObject shopSlotPrefab; 

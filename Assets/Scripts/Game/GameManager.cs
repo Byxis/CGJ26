@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
+        // Réinitialiser le multiplicateur de clicks à chaque nouvelle partie
+        BoosterAction.clickMultiplier = 1;
 
         m_leaderboard = FindFirstObjectByType<SaveDataBase>();
     }

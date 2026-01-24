@@ -4,9 +4,11 @@ using System.Collections;
 
 public class BeerAction : MonoBehaviour, IPointerClickHandler
 {
+    [Header("Dégâts")]
+    public float damage = 50f;
 
     public Transform finalPoint;
-    public float speed = 1f;
+    public float speed = 2f;
     private AnimationManager manager;
     private bool isMoving = false;
     private Vector3 originalPosition;
@@ -15,8 +17,31 @@ public class BeerAction : MonoBehaviour, IPointerClickHandler
 
     public void Setup(Transform target, AnimationManager mgr)
     {
-        finalPoint = target;
+        // Ignore le target passé en paramètre, on va chercher dynamiquement
         manager = mgr;
+    }
+
+    private Transform FindFurthestEnemy()
+    {
+        float minX = float.MaxValue;
+        Transform closest = null;
+
+        // Chercher tous les objets avec le layer TeamEnemy
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.layer == LayerMask.NameToLayer("TeamEnemy"))
+            {
+                if (obj.transform.position.x < minX)
+                {
+                    minX = obj.transform.position.x;
+                    closest = obj.transform;
+                }
+            }
+        }
+
+        return closest;
     }
 
     public void EnableClick() 
@@ -28,6 +53,15 @@ public class BeerAction : MonoBehaviour, IPointerClickHandler
     {
         if (!isMoving && canClick)
         {
+            // Trouve la cible dynamiquement au moment du clic
+            finalPoint = FindFurthestEnemy();
+
+            if (finalPoint == null)
+            {
+                Debug.LogWarning("Aucun ennemi trouvé !");
+                return;
+            }
+
             if (manager != null)
             {
                 manager.CancelTimeout();
@@ -80,6 +114,17 @@ public class BeerAction : MonoBehaviour, IPointerClickHandler
             Vector3 m2 = Vector3.Lerp(controlPoint, targetPos, t);
             transform.position = Vector3.Lerp(m1, m2, t);
             yield return null;
+        }
+
+        // Impact - Infliger les dégâts à la cible
+        if (finalPoint != null)
+        {
+            UnitController targetUnit = finalPoint.GetComponent<UnitController>();
+            if (targetUnit != null)
+            {
+                targetUnit.TakeDamage(damage);
+                Debug.Log($"Bière inflige {damage} dégâts à {finalPoint.name}");
+            }
         }
 
         // 4. Fin de vie

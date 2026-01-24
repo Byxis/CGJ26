@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: DungBeetle
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  cardName: 
+  cost: 2
   icon: {fileID: -8320102380781528936, guid: bc6d5e53c4b7029639e406dddd437447, type: 3}
   unitPrefab: {fileID: 3099495097841385038, guid: 214800dde2ca913498c6a14d1e96acae, type: 3}
+  currentStats: {fileID: 0}
   clicksRequiredToSpawn: 40

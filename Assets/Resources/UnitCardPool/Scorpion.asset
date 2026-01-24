@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: Scorpion
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  cardName: 
+  cost: 2
   icon: {fileID: 0}
   unitPrefab: {fileID: 4194906046444502425, guid: 999583641d49f804ca501cf901cf0271, type: 3}
+  currentStats: {fileID: 0}
   clicksRequiredToSpawn: 50

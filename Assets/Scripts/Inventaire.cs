@@ -60,7 +60,7 @@ public class Inventaire : MonoBehaviour
 
     public void ApplyVictoryBonus()
     {
-        currentGold += 1;
+        currentGold += 3;
         SaveInventory();
     }
 

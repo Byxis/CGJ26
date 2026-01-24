@@ -100,7 +100,9 @@ public class ShopManager : MonoBehaviour
         {
             if (fullCardPool.Length == 0) break;
 
-            BaseCard randomData = fullCardPool[Random.Range(0, fullCardPool.Length)];
+            // WEIGHTED RANDOM SELECTION
+            BaseCard randomData = GetRandomCardWeighted();
+            
             GameObject newSlotObj = Instantiate(shopSlotPrefab, shopContainer);
             
             ShopSlot newSlotScript = newSlotObj.GetComponent<ShopSlot>();
@@ -116,6 +118,39 @@ public class ShopManager : MonoBehaviour
 
         // 4. Turn OFF layout to freeze positions
         StartCoroutine(DisableShopLayout());
+    }
+
+    private BaseCard GetRandomCardWeighted()
+    {
+        float totalWeight = 0f;
+        
+        // 1. Calculate Total Weight
+        foreach (var card in fullCardPool)
+        {
+            // Formula: Weight = 10.0 / Cost
+            // Safety: Treat Cost <= 0 as 1 to avoid DivisionByZero.
+            float cost = card.cost <= 0 ? 1f : (float)card.cost; 
+            totalWeight += 10f / cost;
+        }
+
+        // 2. Pick Random Value within Total Weight
+        float randomValue = Random.Range(0f, totalWeight);
+
+        // 3. Find the card that corresponds to this value
+        foreach (var card in fullCardPool)
+        {
+            float cost = card.cost <= 0 ? 1f : (float)card.cost;
+            float weight = 10f / cost;
+
+            randomValue -= weight;
+            if (randomValue <= 0f)
+            {
+                return card;
+            }
+        }
+
+        // Fallback (e.g. float precision issues), return random
+        return fullCardPool[Random.Range(0, fullCardPool.Length)];
     }
 
     IEnumerator DisableShopLayout()

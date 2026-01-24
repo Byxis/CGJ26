@@ -17,11 +17,11 @@ public class UnitCardDisplay : BaseCardDisplay
 
         if (_cardData is UnitStats unit)
         {
-            if(damageText) damageText.text = unit.damage.ToString();
-            if(healthText) healthText.text = unit.maxHealth.ToString();
-            if(rangeText) rangeText.text = unit.attackRange.ToString();
-            if(cdText) cdText.text = unit.attackCooldown.ToString();
-            if(speedText) speedText.text = unit.speed.ToString();
+            if(damageText) damageText.text = unit.damage.ToString("0.#");
+            if(healthText) healthText.text = unit.maxHealth.ToString("0.#");
+            if(rangeText) rangeText.text = unit.attackRange.ToString("0.#");
+            if(cdText) cdText.text = unit.attackCooldown.ToString("0.#");
+            if(speedText) speedText.text = unit.speed.ToString("0.#");
         }
     }
 
@@ -59,11 +59,24 @@ public class UnitCardDisplay : BaseCardDisplay
         if (_cardData is UnitStats unit)
         {
             // Direct modification (Prototype style)
-            unit.maxHealth += upgrade.bonusHealth;
-            unit.damage += upgrade.bonusDamage;
-            unit.speed += upgrade.bonusSpeed;
-            unit.attackRange += upgrade.bonusAttackRange;
-            unit.attackCooldown += upgrade.bonusAttackCooldown;
+            if (upgrade.usePercentage)
+            {
+                // Apply as RATIO (e.g., 0.1 = +10% of current value)
+                unit.maxHealth += unit.maxHealth * upgrade.bonusHealth;
+                unit.damage += unit.damage * upgrade.bonusDamage;
+                unit.speed += unit.speed * upgrade.bonusSpeed;
+                unit.attackRange += unit.attackRange * upgrade.bonusAttackRange;
+                unit.attackCooldown += unit.attackCooldown * upgrade.bonusAttackCooldown; 
+            }
+            else
+            {
+                // Apply as FLAT Value
+                unit.maxHealth += upgrade.bonusHealth;
+                unit.damage += upgrade.bonusDamage;
+                unit.speed += upgrade.bonusSpeed;
+                unit.attackRange += upgrade.bonusAttackRange;
+                unit.attackCooldown += upgrade.bonusAttackCooldown;
+            }
             
             RefreshUI();
         }

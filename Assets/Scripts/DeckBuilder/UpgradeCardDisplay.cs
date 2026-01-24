@@ -14,12 +14,25 @@ public class UpgradeCardDisplay : BaseCardDisplay
 
         if (_cardData is UpgradeCard upgrade)
         {
-            // Only show if bonus > 0, for example
-            if (bonusDamageText) 
-                bonusDamageText.text = upgrade.bonusDamage != 0 ? $"+{upgrade.bonusDamage} Atk" : "";
-            
-            if (bonusHealthText) 
-                bonusHealthText.text = upgrade.bonusHealth != 0 ? $"+{upgrade.bonusHealth} HP" : "";
+            if (upgrade.usePercentage)
+            {
+                // Display as Percentage
+                if (bonusDamageText) 
+                    bonusDamageText.text = Mathf.Abs(upgrade.bonusDamage) > 0.001f ? $"{upgrade.bonusDamage * 100:0.#}% Atk" : "";
+                
+                if (bonusHealthText) 
+                    bonusHealthText.text = Mathf.Abs(upgrade.bonusHealth) > 0.001f ? $"{upgrade.bonusHealth * 100:0.#}% HP" : "";
+            }
+            else
+            {
+                // Display as Flat
+                // Using nested ternary for sign handling to avoid "+-5"
+                if (bonusDamageText) 
+                    bonusDamageText.text = Mathf.Abs(upgrade.bonusDamage) > 0.001f ? (upgrade.bonusDamage > 0 ? "+" : "") + $"{upgrade.bonusDamage:0.#} Atk" : "";
+                
+                if (bonusHealthText) 
+                    bonusHealthText.text = Mathf.Abs(upgrade.bonusHealth) > 0.001f ? (upgrade.bonusHealth > 0 ? "+" : "") + $"{upgrade.bonusHealth:0.#} HP" : "";
+            }
         }
     }
 

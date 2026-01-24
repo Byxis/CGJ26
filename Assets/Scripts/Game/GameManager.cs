@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject m_endGameMenu;
-    [SerializeField] private GameObject m_pauseMenu;
+    [SerializeField]
+    private GameObject m_pauseMenu;
 
     private TMPro.TextMeshProUGUI m_endGameText;
     private TMPro.TextMeshProUGUI m_levelText;
@@ -32,6 +33,15 @@ public class GameManager : MonoBehaviour
     private GameObject m_playerBase;
     [SerializeField]
     private GameObject m_playerSpawnPoint;
+
+    [SerializeField]
+    private TipData m_basicTip;
+    [SerializeField]
+    private TipData m_yourBaseTip;
+    [SerializeField]
+    private TipData m_enemyBaseTip;
+    [SerializeField]
+    private TipData m_uniteTip;
 
     private SaveDataBase m_leaderboard;
 
@@ -103,6 +113,33 @@ public class GameManager : MonoBehaviour
         if (m_pauseMenu != null)
         {
             m_pauseMenu.SetActive(false);
+        }
+    }
+
+    private void Start()
+    {
+        if (TipManager.Instance != null)
+        {
+            if (m_basicTip != null)
+            {
+                TipManager.Instance.TriggerTip(m_basicTip);
+            }
+            if (m_yourBaseTip != null)
+            {
+                TipManager.Instance.TriggerTip(m_yourBaseTip);
+            }
+            if (m_enemyBaseTip != null)
+            {
+                TipManager.Instance.TriggerTip(m_enemyBaseTip);
+            }
+            if (m_uniteTip != null)
+            {
+                TipManager.Instance.TriggerTip(m_uniteTip);
+            }
+        }
+        else
+        {
+            Debug.LogError("TipManager introuvable !");
         }
     }
 

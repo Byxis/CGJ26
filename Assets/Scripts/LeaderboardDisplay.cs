@@ -77,7 +77,7 @@ public class LeaderboardDisplay : MonoBehaviour
             int score = entry.score;
 
             // Formater chaque ligne
-            leaderboardContent += $"{prefix}<b>#{rank}</b> - {playerName} : <color=yellow>{score}</color> pts\n";
+            leaderboardContent += $"<b>#{rank}</b> - {playerName} : <color=yellow>{score}</color> pts\n";
         }
 
         leaderboardText.text = leaderboardContent;

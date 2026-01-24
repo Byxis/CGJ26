@@ -36,12 +36,10 @@ public class Inventaire : MonoBehaviour
     // Update is called once per frame
     public void OnShopLeave(List<UnitData> us)
     {
-        Debug.Log($"Inventaire: OnShopLeave called with {us?.Count ?? 0} units.");
         UnitStats.Clear();
 
         if (us == null || us.Count == 0)
         {
-            Debug.LogWarning("Inventaire: List is empty/null! Adding default 'fourmi'.");
             UnitStats.Add(fourmi);
         }
         else
@@ -49,7 +47,6 @@ public class Inventaire : MonoBehaviour
             foreach (UnitData unit in us)
             {
                 UnitStats.Add(unit);
-                Debug.Log($"Inventaire: Saved {unit.name}");
             }
         }
     }

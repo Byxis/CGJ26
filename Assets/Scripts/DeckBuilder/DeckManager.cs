@@ -9,7 +9,6 @@ public class DeckManager : MonoBehaviour
 
     public void SaveToInventory()
     {
-        Debug.Log($"DeckManager [{GetInstanceID()}]: Saving {deckData.Count} units to Inventory...");
         List<UnitData> unitsToSave = new List<UnitData>();
 
         for (int i = 0; i < deckData.Count; i++)
@@ -17,11 +16,8 @@ public class DeckManager : MonoBehaviour
             var card = deckData[i];
             if (card == null)
             {
-                Debug.LogWarning($"DeckManager: Card at index {i} is NULL!");
                 continue;
             }
-
-            Debug.Log($"DeckManager: Card {i} is named '{card.name}' and is of type '{card.GetType().Name}'");
 
             if (card is UnitData unit)
             {
@@ -32,14 +28,8 @@ public class DeckManager : MonoBehaviour
                 Debug.LogError(
                     $"DeckManager: CRITICAL DATA ERROR! Card '{card.name}' is a 'UnitStats' asset. The Inventory ONLY accepts 'UnitData'. Please create a UnitData asset for this unit and update your Resources/Shop!");
             }
-            else
-            {
-                Debug.LogWarning(
-                    $"DeckManager: Card '{card.name}' is NOT UnitData! It is {card.GetType().Name}. Skipping.");
-            }
         }
 
-        Debug.Log($"DeckManager: Final list has {unitsToSave.Count} units. Sending to Inventaire...");
         FindFirstObjectByType<Inventaire>().OnShopLeave(unitsToSave);
     }
     [Header("References")]
@@ -52,7 +42,6 @@ public class DeckManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"DeckManager [{GetInstanceID()}]: Start called. Loading inventory...");
         LoadDeckFromInventory();
     }
 
@@ -61,22 +50,15 @@ public class DeckManager : MonoBehaviour
         var inventory = FindFirstObjectByType<Inventaire>();
         if (inventory != null && inventory.UnitStats != null)
         {
-            Debug.Log($"DeckManager [{GetInstanceID()}]: Found Inventaire with {inventory.UnitStats.Count} units.");
             foreach (var unitData in inventory.UnitStats)
             {
-                Debug.Log($"DeckManager [{GetInstanceID()}]: Loading unit from inventory: {unitData.name}");
                 AddCardToDeck(unitData);
             }
-        }
-        else
-        {
-            Debug.LogWarning($"DeckManager [{GetInstanceID()}]: Inventaire not found or UnitStats is null!");
         }
     }
 
     public void AddCardToDeck(BaseCard data)
     {
-        Debug.Log($"DeckManager [{GetInstanceID()}]: AddCardToDeck called for {data.name}");
         // 1. Choose Prefab
         GameObject prefabToUse = unitCardPrefab;
         BaseCard dataToUse = data;

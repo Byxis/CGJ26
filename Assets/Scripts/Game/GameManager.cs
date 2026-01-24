@@ -134,6 +134,8 @@ public class GameManager : MonoBehaviour
                 m_inputField.onValueChanged.AddListener(ValidateInput);
             }
         }
+
+        
     }
 
     private void ValidateInput(string text)

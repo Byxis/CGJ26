@@ -117,14 +117,8 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         if (animator != null)
         {
-            WaitAndOpenGame(1.0f);
+            animator.SetTrigger("StartingGame");
         }
-    }
-
-    public IEnumerator WaitAndOpenGame(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        animator.SetTrigger("StartingGame");
     }
 
     public void OpenGame() {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scorpion
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   cardName: Scorpion
-  cost: 0
+  cost: 2
   icon: {fileID: 0}
   unitPrefab: {fileID: 4194906046444502425, guid: 999583641d49f804ca501cf901cf0271, type: 3}
   currentStats: {fileID: 0}

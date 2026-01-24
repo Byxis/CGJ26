@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hornet
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   cardName: Hornet
-  cost: 0
+  cost: 2
   icon: {fileID: -8320102380781528936, guid: bc6d5e53c4b7029639e406dddd437447, type: 3}
   unitPrefab: {fileID: 3246190588014566285, guid: 49801d34df3000242849d5f4033a4366, type: 3}
   currentStats: {fileID: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mantis
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   cardName: Mantis
-  cost: 0
+  cost: 2
   icon: {fileID: -8320102380781528936, guid: bc6d5e53c4b7029639e406dddd437447, type: 3}
   unitPrefab: {fileID: 6469990257173976888, guid: 86c5853b80e7ffb499482a225d30039c, type: 3}
   currentStats: {fileID: 0}

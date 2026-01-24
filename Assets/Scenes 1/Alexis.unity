@@ -639,6 +639,66 @@ PrefabInstance:
       propertyPath: opponentBase
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].maxLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].minLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].clickRandomness
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].clickGenerationSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].clickRandomFrequency
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.data[0].unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: c16bff57e9dad084e84c92ebfd7ca5d4, type: 2}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.data[1].unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: 28e3c696d80b77f4fa3ea39eb0e3ade2, type: 2}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.data[2].unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: e742504c817dfb442bd11e226caaf1b9, type: 2}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.data[3].unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: 23ef926a43747604ea9bf0ff6b8c8156, type: 2}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.data[0].spawnWeight
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.data[1].spawnWeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.data[2].spawnWeight
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247526164528543128, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
+      propertyPath: levelConfigs.Array.data[2].deck.Array.data[3].spawnWeight
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6700312368960993757, guid: 5cc0cc1701cfe314eaa696f78f694a62, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

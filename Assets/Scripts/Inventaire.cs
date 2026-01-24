@@ -27,11 +27,7 @@ public class Inventaire : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        // Initialization moved to Awake to avoid resetting on scene reload if it were not persistent
-        // But since it is persistent now, Start runs once.
-    }
+    void Start() {}
 
     // Update is called once per frame
     public void OnShopLeave(List<UnitData> us)

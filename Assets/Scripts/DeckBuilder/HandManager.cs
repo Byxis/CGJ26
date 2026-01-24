@@ -9,7 +9,6 @@ public class HandManager : MonoBehaviour
     /// </summary>
     public void GetUnitStatsInHand()
     {
-        // 1. CRITICAL FIX: Prioritize the DeckManager used by ShopManager (the one that received bought cards)
         ShopManager shopManager = FindFirstObjectByType<ShopManager>(FindObjectsInactive.Include);
         DeckManager deckManager = null;
 
@@ -19,7 +18,6 @@ public class HandManager : MonoBehaviour
         }
         else
         {
-            // Fallback: Try finding global DeckManager (even if inactive)
             deckManager = FindFirstObjectByType<DeckManager>(FindObjectsInactive.Include);
         }
 

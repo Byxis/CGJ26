@@ -33,12 +33,12 @@ public class DeckManager : MonoBehaviour
         FindFirstObjectByType<Inventaire>().OnShopLeave(unitsToSave);
     }
     [Header("References")]
-    public GameObject unitCardPrefab;     // Formerly cardDisplayprefab
-    public GameObject upgradeCardPrefab;  // NEW
-    public Transform deckArea;            // The 'HandArea' object in the canvas
+    public GameObject unitCardPrefab;
+    public GameObject upgradeCardPrefab;
+    public Transform deckArea;
 
     [Header("Data")]
-    public List<BaseCard> deckData = new List<BaseCard>();  // Your list of card assets
+    public List<BaseCard> deckData = new List<BaseCard>();
 
     private void Start()
     {

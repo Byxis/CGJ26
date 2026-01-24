@@ -200,24 +200,19 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         if (this.spawnPoint != null)
             return;
 
-        // 1. Try GameManager
         if (GameManager.Instance != null && GameManager.Instance.PlayerSpawnPoint != null)
         {
             this.spawnPoint = GameManager.Instance.PlayerSpawnPoint;
-            Debug.Log("CardController: Found SpawnPoint via GameManager.");
             return;
         }
 
-        // 2. Try Component Search (Include Inactive!)
         var marker = FindFirstObjectByType<PlayerSpawnPoint>(FindObjectsInactive.Include);
         if (marker != null)
         {
             this.spawnPoint = marker.transform;
-            Debug.Log("CardController: Found SpawnPoint via PlayerSpawnPoint script.");
             return;
         }
 
-        // 3. Fallbacks
         GameObject foundSpawn = GameObject.Find("PlayerSpawnPoint");
         if (foundSpawn == null)
             foundSpawn = GameObject.Find("PlayerBase");
@@ -225,7 +220,6 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         if (foundSpawn != null)
         {
             this.spawnPoint = foundSpawn.transform;
-            Debug.Log("CardController: Found SpawnPoint via Name: " + foundSpawn.name);
         }
     }
 }

@@ -123,7 +123,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
         transform.localScale = Vector3.one * 2.3f;
 
-        _currentClicks++;
+        _currentClicks += BoosterAction.clickMultiplier;
         UpdateVisuals();
 
         if (_currentClicks >= unitData.clicksRequiredToSpawn)

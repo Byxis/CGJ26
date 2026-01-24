@@ -4,9 +4,21 @@ using System.Collections;
 
 public class FireworkAction : MonoBehaviour, IPointerClickHandler
 {
+    [Header("Dégâts AOE")]
+    public float damage = 40f;
+    public float explosionRadius = 2f;
+    public AnimationCurve damageFalloff = AnimationCurve.Linear(0, 1, 1, 0.3f);
+
     [Header("Réglages")]
-    public float speed = 1.5f;
+    public float speed = 3f;
     public float amplitudeTremblement = 0.05f;
+    
+    [Header("Effets visuels")]
+    [Tooltip("Prefab de l'effet de trainée")]
+    public GameObject trailEffectPrefab;
+    
+    [Tooltip("Prefab de l'effet d'explosion")]
+    public GameObject explosionEffectPrefab;
 
     private Transform targetPoint;
     private FireworkCannonManager manager;
@@ -14,6 +26,80 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
     private bool isMoving = false;
     private bool canClick = false;
     private Coroutine trembleCoroutine;
+    private GameObject trailEffectInstance;
+    
+    void Start()
+    {
+        // Désactiver le sprite renderer moche
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = false;
+        }
+        
+        // Créer l'effet de trainée depuis le prefab
+        if (trailEffectPrefab != null)
+        {
+            trailEffectInstance = Instantiate(trailEffectPrefab, transform.position, Quaternion.identity);
+            trailEffectInstance.transform.SetParent(transform);
+            trailEffectInstance.transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+
+        CreateProjectileParticles();
+        }
+    }
+    
+    void CreateProjectileParticles()
+    {
+        GameObject particleObj = new GameObject("ProjectileParticles");
+        particleObj.transform.SetParent(transform);
+        particleObj.transform.localPosition = Vector3.zero;
+        
+        ParticleSystem projectileParticles = particleObj.AddComponent<ParticleSystem>();
+        
+        // Arrêter le ParticleSystem avant de le configurer
+        projectileParticles.Stop();
+        
+        var main = projectileParticles.main;
+        main.startLifetime = 0.5f;
+        main.startSpeed = new ParticleSystem.MinMaxCurve(0.1f, 0.3f); // Très lent pour rester groupées
+        main.startSize = 0.05f; // Même taille que l'explosion
+        main.startColor = new Color(1f, 0.3f, 0f, 1f); // Orange/rouge
+        main.maxParticles = 200; // Même nombre que l'explosion
+        main.loop = true;
+        main.simulationSpace = ParticleSystemSimulationSpace.World;
+        
+        var emission = projectileParticles.emission;
+        emission.rateOverTime = 400; // Beaucoup de particules générées
+        
+        var shape = projectileParticles.shape;
+        shape.shapeType = ParticleSystemShapeType.Sphere;
+        shape.radius = 0.05f; // Très petit rayon = très concentré
+        
+        // Fade out
+        var colorOverLifetime = projectileParticles.colorOverLifetime;
+        colorOverLifetime.enabled = true;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] { 
+                new GradientColorKey(new Color(1f, 0.5f, 0f), 0f),
+                new GradientColorKey(Color.red, 1f)
+            },
+            new GradientAlphaKey[] { 
+                new GradientAlphaKey(1f, 0f),
+                new GradientAlphaKey(0f, 1f)
+            }
+        );
+        colorOverLifetime.color = new ParticleSystem.MinMaxGradient(gradient);
+        
+        var renderer = projectileParticles.GetComponent<ParticleSystemRenderer>();
+        renderer.sortingOrder = 15;
+        
+        projectileParticles.Play();
+    }
+    
     public bool IsMoving()
     {
         return isMoving;
@@ -21,8 +107,31 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
 
     public void Setup(Transform target, FireworkCannonManager mgr)
     {
-        targetPoint = target;
+        // Ignore le target passé en paramètre, on va chercher dynamiquement
         manager = mgr;
+    }
+
+    private Transform FindFurthestEnemy()
+    {
+        float minX = float.MaxValue;
+        Transform closest = null;
+
+        // Chercher tous les objets avec le layer TeamEnemy
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.layer == LayerMask.NameToLayer("TeamEnemy"))
+            {
+                if (obj.transform.position.x < minX)
+                {
+                    minX = obj.transform.position.x;
+                    closest = obj.transform;
+                }
+            }
+        }
+
+        return closest;
     }
 
     public void EnableClick() 
@@ -51,6 +160,15 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
         Debug.Log("Clic détecté sur : " + gameObject.name);
         if (!isMoving && canClick)
         {
+            // Trouve la cible dynamiquement au moment du clic
+            targetPoint = FindFurthestEnemy();
+
+            if (targetPoint == null)
+            {
+                Debug.LogWarning("Aucun ennemi trouvé !");
+                return;
+            }
+
             if (manager != null)
             {
                 manager.CancelTimeout();
@@ -133,7 +251,38 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
 
     void FinaliserVol()
     {
-        // On pourrait instancier un effet de particules ici
+        // Explosion AOE - Infliger les dégâts dans le rayon
+        Vector3 explosionPos = transform.position;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(explosionPos, explosionRadius, LayerMask.GetMask("TeamEnemy"));
+        
+        int hitCount = 0;
+        foreach (Collider2D collider in colliders)
+        {
+            UnitController targetUnit = collider.GetComponent<UnitController>();
+            if (targetUnit != null)
+            {
+                // Calculer les dégâts en fonction de la distance (centre = max, bords = réduits)
+                float distance = Vector2.Distance(explosionPos, collider.transform.position);
+                float normalizedDistance = Mathf.Clamp01(distance / explosionRadius);
+                float damageMultiplier = damageFalloff.Evaluate(normalizedDistance);
+                float finalDamage = damage * damageMultiplier;
+                
+                targetUnit.TakeDamage(finalDamage);
+                hitCount++;
+            }
+        }
+        
+        if (explosionEffectPrefab != null)
+        {
+            Instantiate(explosionEffectPrefab, explosionPos, Quaternion.identity);
+        }
+        else
+        {
+            GameObject explosionObj = new GameObject("Explosion");
+            explosionObj.transform.position = explosionPos;
+            explosionObj.AddComponent<ExplosionEffect>();
+        }
+        
         if (manager != null) {
             manager.StartNewCycle();
         }

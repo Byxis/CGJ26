@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 182cd195a28310e479cddf7ff82822f8, type: 3}
   m_Name: LootLockerConfig
   m_EditorClassIdentifier: lootlocker.lootlockersdk.runtime::LootLocker.LootLockerConfig
-  apiKey: dev_52fce5e28b4b464a8c9e324396bf21fd
-  adminToken: ae07d89f5e6483363e29727c567c541a0bcba2ae
-  domainKey: ob46uzsa
+  apiKey: 
+  adminToken: 
+  domainKey: 
   game_version: 1.0.0.0
-  sdk_version: N/A
+  sdk_version: 
   url: https://api.lootlocker.com/v1
-  adminUrl: https://ob46uzsa.api.lootlocker.com/admin
-  playerUrl: https://ob46uzsa.api.lootlocker.com/player
-  userUrl: https://ob46uzsa.api.lootlocker.com/game
-  webSocketBaseUrl: wss://ob46uzsa.api.lootlocker.com/game
-  baseUrl: https://ob46uzsa.api.lootlocker.com
+  adminUrl: https://api.lootlocker.com/admin
+  playerUrl: https://api.lootlocker.com/player
+  userUrl: https://api.lootlocker.com/game
+  webSocketBaseUrl: wss://api.lootlocker.com/game
+  baseUrl: https://api.lootlocker.com
   clientSideRequestTimeOut: 180
   logLevel: 2
   prettifyJson: 1

@@ -13,6 +13,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public Image fillImage;
     public Gradient progressColor;
     public TMPro.TextMeshProUGUI costText;
+    public int clicksRequiredToSpawn;
 
     [Header("Autre")]
     private Transform spawnPoint;

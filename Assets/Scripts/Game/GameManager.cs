@@ -13,9 +13,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField]
     private GameObject m_endGameMenu;
-    [SerializeField]
     private GameObject m_pauseMenu;
 
     private TMPro.TextMeshProUGUI m_endGameText;
@@ -37,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private SaveDataBase m_leaderboard;
 
-    public GameState State { get; private set; } = GameState.Playing;
+    public GameState State = GameState.Playing;
 
     private void Awake()
     {
@@ -50,6 +48,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        m_endGameMenu = GameObject.FindGameObjectWithTag("EndPanel");
 
         m_leaderboard = FindFirstObjectByType<SaveDataBase>();
 
@@ -101,7 +101,13 @@ public class GameManager : MonoBehaviour
 
             m_endGameMenu.SetActive(false);
         }
-        ResetAndStartLevel(0);
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "Alexis" || sceneName == "Game")
+        {
+            ResetAndStartLevel(0);
+        }
+
+        GameObject m_pauseMenu = GameObject.FindGameObjectWithTag("PausePanel");
         if (m_pauseMenu != null)
         {
             m_pauseMenu.SetActive(false);
@@ -125,6 +131,16 @@ public class GameManager : MonoBehaviour
 
         bool isPlayerBase = LayerMask.LayerToName(baseUnit.gameObject.layer).Contains("Player");
         State = isPlayerBase ? GameState.GameOver : GameState.Victory;
+
+        if (State == GameState.Victory && Inventaire.Instance != null)
+        {
+            Inventaire.Instance.ApplyVictoryBonus();
+        }
+
+        if (m_endGameMenu == null)
+            m_endGameMenu = GameObject.FindGameObjectWithTag("EndPanel");
+
+        UnityEngine.Debug.Log("End game menu found: " + (m_endGameMenu != null));
 
         if (m_endGameMenu != null)
         {
@@ -216,7 +232,6 @@ public class GameManager : MonoBehaviour
 
         if (OpponentBehavior.Instance != null)
         {
-            OpponentBehavior.Instance.opponentBase = eBase.transform;
             OpponentBehavior.Instance.StartLevel(levelIndex);
         }
 
@@ -239,29 +254,5 @@ public class GameManager : MonoBehaviour
                       });
     }
 
-    public void unPauseGame()
-    {
-        if (State == GameState.Paused)
-        {
-            State = GameState.Playing;
-            Time.timeScale = 1f;
-            if (m_pauseMenu != null)
-            {
-                m_pauseMenu.SetActive(false);
-            }
-        }
-    }
-
-    public void pauseGame()
-    {
-        if (State == GameState.Playing)
-        {
-            State = GameState.Paused;
-            Time.timeScale = 0f;
-            if (m_pauseMenu != null)
-            {
-                m_pauseMenu.SetActive(true);
-            }
-        }
-    }
+    
 }

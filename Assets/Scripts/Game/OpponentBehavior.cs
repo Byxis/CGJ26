@@ -26,7 +26,6 @@ public class OpponentBehavior : MonoBehaviour
 
     [Header("Configuration")]
     public Transform spawnPoint;
-    public Transform opponentBase;
     public List<OpponentLevelConfig> levelConfigs;
 
     [Header("Debug / State")]
@@ -81,12 +80,6 @@ public class OpponentBehavior : MonoBehaviour
     {
         if (!isLevelActive)
             return;
-
-        if (opponentBase == null)
-        {
-            isLevelActive = false;
-            return;
-        }
 
         OpponentLevelConfig currentConfig = GetConfigForLevel(currentLevelIndex);
 

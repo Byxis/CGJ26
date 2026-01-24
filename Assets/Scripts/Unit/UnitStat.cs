@@ -47,4 +47,8 @@ public class UnitStats : BaseCard
     [Header("Invocable")]
     public GameObject invocablePrefab;
     public int numberOfInvocable;
+
+    [Header("Animation")]
+    public RuntimeAnimatorController animator;
 }
+

@@ -174,8 +174,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3117410753237233997, guid: 9baccbe03f3f29b48994ea27da758d40, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 238141638}
   m_SourcePrefab: {fileID: 100100000, guid: 9baccbe03f3f29b48994ea27da758d40, type: 3}
+--- !u!1 &238141637 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3117410753237233997, guid: 9baccbe03f3f29b48994ea27da758d40, type: 3}
+  m_PrefabInstance: {fileID: 238141636}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &238141638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238141637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea36074aec4b4941aeac5ffe7d8be9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TipOpener
+  tipDatas:
+  - {fileID: 11400000, guid: 5151d4a42099a664594d02daee87b0c9, type: 2}
+  - {fileID: 11400000, guid: fca13fac7ada0ca4090d6b1d1662a334, type: 2}
+  - {fileID: 11400000, guid: cbf22c2bd7b725343ae81c9dc1766ab3, type: 2}
+  - {fileID: 11400000, guid: c073c7aa3e5f54448b9f1c9d41fbe3b8, type: 2}
 --- !u!1 &1048666184
 GameObject:
   m_ObjectHideFlags: 0

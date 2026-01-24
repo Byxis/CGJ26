@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3517922589512520766}
   - component: {fileID: 7266728746063406111}
+  - component: {fileID: 5909141253102245258}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -49,10 +50,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   m_endGameMenu: {fileID: 0}
+  m_pauseMenu: {fileID: 0}
   m_enemyBase: {fileID: 953601041317249515, guid: acb903316042d96449cac84e5d433860, type: 3}
   m_enemySpawnPoint: {fileID: 3739950075426197069}
   m_playerBase: {fileID: 1229777137719272569, guid: f6dd63ca3dad4a6449ee31a39339ed9b, type: 3}
   m_playerSpawnPoint: {fileID: 2687672251054472814}
+--- !u!114 &5909141253102245258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266735365939065166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e14e1e192da688db826fd2208238fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopCloseOpen
 --- !u!1 &1519583240504837343
 GameObject:
   m_ObjectHideFlags: 0

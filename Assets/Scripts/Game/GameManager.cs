@@ -39,14 +39,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
+        if (Instance == null) {
             Instance = this;
-        }
-        else
-        {
+            DontDestroyOnLoad(gameObject);
+        } else {
             Destroy(gameObject);
-            return;
         }
 
         m_leaderboard = FindFirstObjectByType<SaveDataBase>();

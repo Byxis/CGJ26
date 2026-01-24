@@ -6,6 +6,9 @@ using System.Collections;
 public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
+    private Scene shopScene;
+    private bool isShopLoaded = false;
+
     public GameObject leaderBoardPanel;
     public GameObject leaderBg;
     public GameObject startBg;

@@ -101,6 +101,8 @@ public class GameManager : MonoBehaviour
         {
             m_pauseMenu.SetActive(false);
         }
+
+        
     }
 
     private void ValidateInput(string text)

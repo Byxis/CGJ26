@@ -34,3 +34,4 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   invocablePrefab: {fileID: 0}
   numberOfInvocable: 0
+  animator: {fileID: 9100000, guid: 22d285db9c555ce4db95a981fb640cc8, type: 2}

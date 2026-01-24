@@ -9,28 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
+  m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: Scorpion
-  m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  cardName: Scorpion
-  cost: 5
-  maxHealth: 20
-  speed: 0.9
-  damage: 3
-  attackRange: 0.8
-  attackCooldown: 1.5
-  unitType: 0
-  clickToKill: 0
-  effectOnHit: 1
-  effectDuration: 1
-  effectValue: 4
-  explosionRadius: 0
-  explosionDamageCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  projectilePrefab: {fileID: 0}
-  invocablePrefab: {fileID: 0}
-  numberOfInvocable: 0
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  icon: {fileID: 0}
+  unitPrefab: {fileID: 4194906046444502425, guid: 999583641d49f804ca501cf901cf0271, type: 3}
+  clicksRequiredToSpawn: 50

@@ -9,28 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
+  m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: Spider
-  m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  cardName: Spider
-  cost: 10
-  maxHealth: 10
-  speed: 0.7
-  damage: 3
-  attackRange: 4
-  attackCooldown: 3
-  unitType: 0
-  clickToKill: 0
-  effectOnHit: 2
-  effectDuration: 1
-  effectValue: 0.6
-  explosionRadius: 0
-  explosionDamageCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  projectilePrefab: {fileID: 8391138026608434301, guid: 3b6b7236514873440a24a31db79f4aca, type: 3}
-  invocablePrefab: {fileID: 0}
-  numberOfInvocable: 0
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  icon: {fileID: -8320102380781528936, guid: bc6d5e53c4b7029639e406dddd437447, type: 3}
+  unitPrefab: {fileID: 7154759602627643112, guid: 8f7f50ef4eb1d6f47857143b12669fcd, type: 3}
+  clicksRequiredToSpawn: 15

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
@@ -85,8 +86,14 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
         DeckPanel panel = GetComponentInParent<DeckPanel>();
         if (panel != null)
+            if (panel != null)
+            {
+                this.spawnPoint = panel.spawnPoint;
+            }
+
+        if (this.spawnPoint == null)
         {
-            this.spawnPoint = panel.spawnPoint;
+            FindSpawnPoint();
         }
 
         if (unitData != null)
@@ -113,6 +120,12 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             Debug.LogError("UnitData manquant sur la carte : " + gameObject.name);
         }
 
+        UpdateVisuals();
+    }
+
+    public void Initialize(UnitData data)
+    {
+        this.unitData = data;
         UpdateVisuals();
     }
 
@@ -145,17 +158,68 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     private void SpawnUnit()
     {
+        if (unitData.unitPrefab == null)
+        {
+            Debug.LogError(
+                $"Spawn impossible : Prefab MANQUANT dans le ScriptableObject '{unitData.name}'. Assignez un Prefab dans l'Inspector de l'unité.");
+            return;
+        }
+
+        if (spawnPoint == null)
+        {
+            // Last chance lazy load
+            FindSpawnPoint();
+
+            if (spawnPoint == null)
+            {
+                Debug.LogError(
+                    $"Spawn impossible : SpawnPoint MANQUANT pour '{gameObject.name}'. Le script n'a pas trouvé 'PlayerSpawnPoint' ni 'PlayerBase'.");
+                return;
+            }
+        }
+
         if (unitData.unitPrefab != null && spawnPoint != null)
         {
             GameObject g = Instantiate(unitData.unitPrefab, spawnPoint.position, Quaternion.identity);
             g.layer = LayerMask.NameToLayer("TeamPlayer");
-        }
-        else
-        {
-            Debug.LogError("Spawn impossible : Prefab ou SpawnPoint manquant sur " + gameObject.name);
+
+            UnitController ctrl = g.GetComponent<UnitController>();
+            if (ctrl != null && unitData.currentStats != null)
+            {
+                ctrl.SetStats(unitData.currentStats);
+            }
         }
 
         _currentClicks = 0;
         UpdateVisuals();
+    }
+
+    // In Start(), improved search:
+    private void FindSpawnPoint()
+    {
+        if (this.spawnPoint != null)
+            return;
+
+        if (GameManager.Instance != null && GameManager.Instance.PlayerSpawnPoint != null)
+        {
+            this.spawnPoint = GameManager.Instance.PlayerSpawnPoint;
+            return;
+        }
+
+        var marker = FindFirstObjectByType<PlayerSpawnPoint>(FindObjectsInactive.Include);
+        if (marker != null)
+        {
+            this.spawnPoint = marker.transform;
+            return;
+        }
+
+        GameObject foundSpawn = GameObject.Find("PlayerSpawnPoint");
+        if (foundSpawn == null)
+            foundSpawn = GameObject.Find("PlayerBase");
+
+        if (foundSpawn != null)
+        {
+            this.spawnPoint = foundSpawn.transform;
+        }
     }
 }

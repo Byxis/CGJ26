@@ -5,7 +5,6 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-
     public GameObject leaderBoardPanel;
     public GameObject leaderBg;
     public GameObject startBg;
@@ -14,7 +13,7 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public GameObject backBg;
 
     public Animator animator;
-    
+
     private string currentButtonName = "";
 
     public void OnPointerClick(PointerEventData eventData)
@@ -26,7 +25,7 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             switch (buttonName)
             {
                 case "StartButton":
-                if (leaderBoardPanel.activeInHierarchy)
+                    if (leaderBoardPanel.activeInHierarchy)
                     {
                         break;
                     }
@@ -121,7 +120,8 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         }
     }
 
-    public void OpenGame() {
+    public void OpenGame()
+    {
         Debug.Log("Start button pressed");
         SceneManager.LoadScene("Alexis");
     }

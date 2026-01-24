@@ -9,28 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
+  m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: Firefly
-  m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  cardName: Firefly
-  cost: 3
-  maxHealth: 7
-  speed: 0.7
-  damage: 2
-  attackRange: 1
-  attackCooldown: 5
-  unitType: 2
-  clickToKill: 0
-  effectOnHit: 0
-  effectDuration: 1
-  effectValue: 0.6
-  explosionRadius: 0
-  explosionDamageCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  projectilePrefab: {fileID: 8391138026608434301, guid: 3b6b7236514873440a24a31db79f4aca, type: 3}
-  invocablePrefab: {fileID: 0}
-  numberOfInvocable: 0
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  icon: {fileID: -4656658513182322354, guid: 851f4ad1dbce929d0a1cf86d74fa34cc, type: 3}
+  unitPrefab: {fileID: 5425327998539634666, guid: 315c85a77ec28e44e9bdbb8eee7270cb, type: 3}
+  clicksRequiredToSpawn: 25

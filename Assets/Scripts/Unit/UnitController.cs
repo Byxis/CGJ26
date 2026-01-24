@@ -6,6 +6,12 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField]
     private UnitStats m_stats;
+    public UnitStats Stats => m_stats;
+
+    public void SetStats(UnitStats stats)
+    {
+        m_stats = stats;
+    }
     [SerializeField]
     private UnitHealthBar m_healthBar;
     private LayerMask m_targetLayer;
@@ -373,12 +379,15 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 
     void Die()
     {
+        Debug.Log($"[UnitController] Die() called for {gameObject.name}, unitType = {m_stats.unitType}");
         m_isDead = true;
 
         if (m_stats.unitType == UnitType.Base)
         {
+            Debug.Log($"[UnitController] Base detected! GameManager.Instance = {GameManager.Instance}");
             if (GameManager.Instance != null)
             {
+                Debug.Log("[UnitController] Calling GameManager.Instance.OnBaseDestroyed()");
                 GameManager.Instance.OnBaseDestroyed(this);
             }
             else

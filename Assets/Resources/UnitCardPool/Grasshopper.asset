@@ -9,28 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 257ac4d059b4b6d429b7854cdfb84f9d, type: 3}
+  m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: Grasshopper
-  m_EditorClassIdentifier: Assembly-CSharp::UnitStats
-  cardName: Grasshopper
-  cost: 5
-  maxHealth: 10
-  speed: 2.5
-  damage: 5
-  attackRange: 0.74
-  attackCooldown: 5
-  unitType: 3
-  clickToKill: 0
-  effectOnHit: 0
-  effectDuration: 0
-  effectValue: 4
-  explosionRadius: 0
-  explosionDamageCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  projectilePrefab: {fileID: 0}
-  invocablePrefab: {fileID: 0}
-  numberOfInvocable: 0
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  icon: {fileID: -8320102380781528936, guid: bc6d5e53c4b7029639e406dddd437447, type: 3}
+  unitPrefab: {fileID: 7521143762550723410, guid: b958223e8521fca4fb1d9a4acb2a836c, type: 3}
+  clicksRequiredToSpawn: 25

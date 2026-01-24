@@ -26,14 +26,12 @@ public class ShopManager : MonoBehaviour
     private BaseCard[] fullCardPool;
 
     [Header("Economy")]
-    public int startingGold = 100;
+    [Header("Economy")]
     public int rerollCost = 2;
-    public int currentGold;
 
     void Start()
     {
-        // 1. Initialize Economy
-        currentGold = startingGold;
+        // 1. Initialize Economy (UI only)
         UpdateGoldUI();
 
         // 2. Setup Reroll Button Click Listener
@@ -73,10 +71,14 @@ public class ShopManager : MonoBehaviour
     // This is linked to the button. It checks money BEFORE rerolling.
     public void OnRerollClick()
     {
-        if (currentGold >= rerollCost)
+        int gold = Inventaire.Instance != null ? Inventaire.Instance.currentGold : 0;
+
+        if (gold >= rerollCost)
         {
             // Pay the cost
-            currentGold -= rerollCost;
+            if (Inventaire.Instance != null)
+                Inventaire.Instance.currentGold -= rerollCost;
+
             UpdateGoldUI();
 
             // Perform the reroll
@@ -85,7 +87,6 @@ public class ShopManager : MonoBehaviour
         else
         {
             Debug.Log("Not enough gold to reroll!");
-            // Tip: You could play a "buzzer" sound here
         }
     }
 
@@ -137,13 +138,17 @@ public class ShopManager : MonoBehaviour
     // --- BUY LOGIC ---
     public void TryBuyCard(BaseCard card, GameObject slotObject)
     {
+        int gold = Inventaire.Instance != null ? Inventaire.Instance.currentGold : 0;
+
         // Check if player can afford the card
-        if (currentGold >= card.cost)
+        if (gold >= card.cost)
         {
             Debug.Log($"Bought {card.cardName} for {card.cost}");
 
             // 1. Pay Gold
-            currentGold -= card.cost;
+            if (Inventaire.Instance != null)
+                Inventaire.Instance.currentGold -= card.cost;
+
             UpdateGoldUI();
 
             // 2. Add to Deck/Hand
@@ -154,16 +159,16 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Not enough gold! Need {card.cost}, have {currentGold}");
+            Debug.Log($"Not enough gold! Need {card.cost}, have {gold}");
         }
     }
 
     // Helper to keep UI in sync
     void UpdateGoldUI()
     {
-        if (goldText != null)
+        if (goldText != null && Inventaire.Instance != null)
         {
-            goldText.text = currentGold + "g";
+            goldText.text = Inventaire.Instance.currentGold + "g";
         }
     }
 }

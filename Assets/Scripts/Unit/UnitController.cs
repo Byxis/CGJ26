@@ -6,6 +6,12 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField]
     private UnitStats m_stats;
+    public UnitStats Stats => m_stats;
+
+    public void SetStats(UnitStats stats)
+    {
+        m_stats = stats;
+    }
     [SerializeField]
     private UnitHealthBar m_healthBar;
     private LayerMask m_targetLayer;

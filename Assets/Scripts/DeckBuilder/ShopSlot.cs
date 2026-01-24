@@ -5,8 +5,8 @@ using TMPro;
 public class ShopSlot : MonoBehaviour
 {
     [Header("References")]
-    public Transform cardContainer; // Where the card spawns
-    public Button buyButton;        // The button on the slot itself
+    public Transform cardContainer;  // Where the card spawns
+    public Button buyButton;         // The button on the slot itself
 
     private BaseCard myCardData;
     private ShopManager myManager;
@@ -28,22 +28,32 @@ public class ShopSlot : MonoBehaviour
         BaseCardDisplay display = visualCard.GetComponent<BaseCardDisplay>();
         if (display != null)
         {
-            // For the SHOP display, we also clone Units so that if we later add functionality 
+            // For the SHOP display, we also clone Units so that if we later add functionality
             // to "preview upgrade" or similar, we don't mess with the asset.
             // BUT we buy the original asset (so we get a fresh unit when we buy).
             BaseCard displayData = data;
-            if (data is UnitStats unit)
+            if (data is UnitData unit)
             {
                 displayData = Instantiate(unit);
+                // Initialize Runtime Stats for display
+                if (unit.unitPrefab != null)
+                {
+                    var controller = unit.unitPrefab.GetComponent<UnitController>();
+                    if (controller != null && controller.Stats != null)
+                    {
+                        ((UnitData)displayData).currentStats = Instantiate(controller.Stats);
+                    }
+                }
             }
-            
+
             display.SetCardData(displayData);
         }
 
         // 4. Disable Raycasts on the spawned card so we can click the shop button behind it
         CanvasGroup group = visualCard.GetComponent<CanvasGroup>();
-        if (group == null) group = visualCard.AddComponent<CanvasGroup>();
-        group.blocksRaycasts = false; 
+        if (group == null)
+            group = visualCard.AddComponent<CanvasGroup>();
+        group.blocksRaycasts = false;
 
         // 5. Setup Buy Logic
         buyButton.onClick.RemoveAllListeners();

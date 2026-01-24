@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject m_endGameMenu;
-    [SerializeField] private GameObject m_pauseMenu;
+    [SerializeField]
+    private GameObject m_pauseMenu;
 
     private TMPro.TextMeshProUGUI m_endGameText;
     private TMPro.TextMeshProUGUI m_levelText;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     private GameObject m_playerBase;
     [SerializeField]
     private GameObject m_playerSpawnPoint;
+    public Transform PlayerSpawnPoint => m_playerSpawnPoint != null ? m_playerSpawnPoint.transform : null;
 
     private SaveDataBase m_leaderboard;
 
@@ -39,10 +41,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) {
+        if (Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-        } else {
+        }
+        else
+        {
             Destroy(gameObject);
         }
 

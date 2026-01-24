@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: Spider
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  cardName: Spider
+  cost: 0
   icon: {fileID: -8320102380781528936, guid: bc6d5e53c4b7029639e406dddd437447, type: 3}
   unitPrefab: {fileID: 7154759602627643112, guid: 8f7f50ef4eb1d6f47857143b12669fcd, type: 3}
+  currentStats: {fileID: 0}
   clicksRequiredToSpawn: 15

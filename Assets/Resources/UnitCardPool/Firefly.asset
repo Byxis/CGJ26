@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: Firefly
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  cardName: Firefly
+  cost: 0
   icon: {fileID: -4656658513182322354, guid: 851f4ad1dbce929d0a1cf86d74fa34cc, type: 3}
   unitPrefab: {fileID: 5425327998539634666, guid: 315c85a77ec28e44e9bdbb8eee7270cb, type: 3}
+  currentStats: {fileID: 0}
   clicksRequiredToSpawn: 25

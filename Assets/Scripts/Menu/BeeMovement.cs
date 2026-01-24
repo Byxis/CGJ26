@@ -4,7 +4,7 @@ using UnityEngine;
 public class BeeMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
-    
+
     [SerializeField] private GameObject startPosition;
     [SerializeField] private GameObject endPosition;
 
@@ -12,9 +12,12 @@ public class BeeMovement : MonoBehaviour
 
     private Vector3 direction = Vector3.down;
 
+    private SpriteRenderer m_spriteRenderer;
+
     void Start()
     {
         target = endPosition.transform;
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void FixedUpdate()
@@ -31,6 +34,7 @@ public class BeeMovement : MonoBehaviour
         }
         else if (Vector3.Distance(transform.position, startPosition.transform.position) < 0.1f)
         {
+            m_spriteRenderer.flipX = true;
             StartCoroutine(WaitToChangeTarget(endPosition.transform));
         }
     }
@@ -40,5 +44,5 @@ public class BeeMovement : MonoBehaviour
         yield return new WaitForSeconds(3f);
         this.target = newTarget;
     }
-    
+
 }

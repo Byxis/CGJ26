@@ -66,14 +66,12 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
             m_direction = Vector2.right;
             m_targetLayer = LayerMask.GetMask("TeamEnemy");
             m_spriteRenderer.flipX = false;
-            m_spriteRenderer.size = new Vector2(m_spriteRenderer.size.x * 2, m_spriteRenderer.size.y * 2);
         }
         else
         {
             m_direction = Vector2.left;
             m_targetLayer = LayerMask.GetMask("TeamPlayer");
             m_spriteRenderer.flipX = true;
-            m_spriteRenderer.size = new Vector2(m_spriteRenderer.size.x * 2, m_spriteRenderer.size.y * 2);
         }
     }
 

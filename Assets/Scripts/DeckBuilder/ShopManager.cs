@@ -11,9 +11,9 @@ public class ShopManager : MonoBehaviour
     public string upgradeResourcesPath = "UpgradeCardPool";
 
     [Header("UI References")]
-    public TextMeshProUGUI goldText;  // Drag Gold Text here
-    public Button rerollButton;       // Drag Reroll Button here
-    public Transform shopContainer;   // Drag Shop Panel here
+    public TextMeshProUGUI goldText;      // Drag Gold Text here
+    public Button rerollButton;           // Drag Reroll Button here
+    public Transform shopContainer;       // Drag Shop Panel here
 
     [Header("Prefabs")]
     public GameObject shopSlotPrefab;

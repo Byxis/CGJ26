@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEditor.Animations;
 
 public class UnitController : MonoBehaviour, IPointerDownHandler
 {
@@ -31,11 +32,28 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
     private bool m_isKnockedBack = false;
     private bool m_isJumping = false;
 
+    private SpriteRenderer m_spriteRenderer;
+
     void Start()
     {
+
         m_rb = GetComponent<Rigidbody2D>();
         m_currentHealth = m_stats.maxHealth;
         m_baseSpeed = m_stats.speed;
+
+        if (m_stats.animator != null)
+        {
+            Animator animator = GetComponent<Animator>();
+            if (animator == null)
+            {
+                animator = gameObject.AddComponent<Animator>();
+            }
+            animator.runtimeAnimatorController = m_stats.animator;
+
+
+        }
+
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (m_healthBar != null)
         {
@@ -47,11 +65,15 @@ public class UnitController : MonoBehaviour, IPointerDownHandler
         {
             m_direction = Vector2.right;
             m_targetLayer = LayerMask.GetMask("TeamEnemy");
+            m_spriteRenderer.flipX = false;
+            m_spriteRenderer.size = new Vector2(m_spriteRenderer.size.x * 2, m_spriteRenderer.size.y * 2);
         }
         else
         {
             m_direction = Vector2.left;
             m_targetLayer = LayerMask.GetMask("TeamPlayer");
+            m_spriteRenderer.flipX = true;
+            m_spriteRenderer.size = new Vector2(m_spriteRenderer.size.x * 2, m_spriteRenderer.size.y * 2);
         }
     }
 

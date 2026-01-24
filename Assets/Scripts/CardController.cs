@@ -24,9 +24,11 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     private float _clickTimer = 0f;
     private float _holdTimer = 0f;
     private bool _isAutoClicking = false;
+    private float _lastClickTime = 0f;
 
     private const float _clickInterval = 0.2f;  // 1/5 = 0.2
     private const float _holdDelay = 1.0f;
+    private const float _doubleClickProtection = 0.1f;  // Protection contre les doubles clics
 
     void Update()
     {
@@ -134,9 +136,16 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         if (unitData == null)
             return;
 
+        // Protection contre les doubles clics
+        float currentTime = Time.time;
+        if (currentTime - _lastClickTime < _doubleClickProtection)
+            return;
+        _lastClickTime = currentTime;
+
         transform.localScale = Vector3.one * 2.3f;
 
         _currentClicks += BoosterAction.clickMultiplier;
+        
         UpdateVisuals();
 
         if (_currentClicks >= unitData.clicksRequiredToSpawn)

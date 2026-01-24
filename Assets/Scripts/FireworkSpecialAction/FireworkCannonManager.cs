@@ -9,12 +9,24 @@ public class FireworkCannonManager : MonoBehaviour
     public Transform launchPoint; 
     public Transform targetPoint;
     public Transform cannonMesh;
+    private CannonRecoilController recoilController;
     private Coroutine timeoutCoroutine;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         animator = GetComponent<Animator>();
+        
+        // Récupère le contrôleur de recul sur le mesh du canon
+        if (cannonMesh != null)
+        {
+            recoilController = cannonMesh.GetComponent<CannonRecoilController>();
+            if (recoilController == null)
+            {
+                Debug.LogWarning("CannonRecoilController non trouvé sur cannonMesh. Le recul ne fonctionnera pas.");
+            }
+        }
+        
         StartNewCycle();
     }
 
@@ -33,8 +45,9 @@ public class FireworkCannonManager : MonoBehaviour
             script.Setup(targetPoint, this);
         }
         
-        
-        yield return new WaitForSeconds(3.0f);
+        // Cooldown plus long avec du random (10-15 secondes au lieu de 3)
+        float randomDelay = Random.Range(10f, 15f);
+        yield return new WaitForSeconds(randomDelay);
 
 
         
@@ -79,11 +92,16 @@ public class FireworkCannonManager : MonoBehaviour
 
     public void OnFireworkSent()
     {
-        // On consomme le trigger de recul
+        // Déclenche le recul programmatique
+        if (recoilController != null)
+        {
+            recoilController.TriggerRecoil();
+        }
+        
+        // Déclenche les autres animations de l'Animator
         if (animator != null) 
         {
-            animator.SetTrigger("onFire"); 
-            // Optionnel : on s'assure que isReady est "éteint"
+            animator.SetTrigger("onFire");
             animator.ResetTrigger("isReady");
         }
         Debug.Log("Missile envoyé !");

@@ -17,7 +17,7 @@ public class AnimationManager : MonoBehaviour
 
     public void StartNewCycle()
     {
-        StartCoroutine(PlayAnimationSequence(5.0f));
+        StartCoroutine(PlayAnimationSequence(12.0f));
     }
     
     IEnumerator PlayAnimationSequence(float delai)

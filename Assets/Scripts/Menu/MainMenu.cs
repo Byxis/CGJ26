@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -29,6 +30,9 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
                     {
                         break;
                     }
+                    GameObject button = eventData.pointerPressRaycast.gameObject;
+                    button.SetActive(false);
+                    startBg.SetActive(false);
                     onStartPressed();
                     break;
                 case "LeaderBoardButton":
@@ -113,7 +117,7 @@ public class MainMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         if (animator != null)
         {
-            animator.SetTrigger("StartGame");
+            animator.SetTrigger("StartingGame");
         }
     }
 

@@ -22,6 +22,8 @@ public enum SpecialEffect
 [CreateAssetMenu(fileName = "NewUnit", menuName = "BattleSystem/UnitStats")]
 public class UnitStats : BaseCard
 {
+    public Sprite icon;
+    public int clicksRequiredToSpawn;
     public float maxHealth;
     public float speed;
     public float damage;

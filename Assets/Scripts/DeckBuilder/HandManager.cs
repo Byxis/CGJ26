@@ -7,7 +7,7 @@ public class HandManager : MonoBehaviour
     /// Returns a list of all UnitStats currently residing in this Hand Area.
     /// This includes any runtime modifications (upgrades) applied to the specific instances.
     /// </summary>
-    public List<UnitStats> GetUnitStatsInHand()
+    public void GetUnitStatsInHand()
     {
         List<UnitStats> currentStats = new List<UnitStats>();
 
@@ -23,6 +23,6 @@ public class HandManager : MonoBehaviour
             }
         }
 
-        return currentStats;
+        FindFirstObjectByType<Inventaire>().OnShopLeave(currentStats);    
     }
 }

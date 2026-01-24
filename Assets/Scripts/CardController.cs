@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
@@ -114,6 +115,18 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         }
 
         UpdateVisuals();
+    }
+
+    public void Initialize(UnitStats data)
+    {
+        unitData.clicksRequiredToSpawn = data.clicksRequiredToSpawn;
+        if (data.icon != null)
+        {
+   unitData.icon = data.icon;         
+
+
+        unitData.unitPrefab = new GameObject(data);
+       }
     }
 
     public void OnCardClicked()

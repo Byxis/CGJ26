@@ -8,10 +8,10 @@ public class ShopSlot : MonoBehaviour
     public Transform cardContainer; // Where the card spawns
     public Button buyButton;        // The button on the slot itself
 
-    private CardData myCardData;
+    private BaseCard myCardData;
     private ShopManager myManager;
 
-    public void Initialize(CardData data, GameObject realCardPrefab, ShopManager manager)
+    public void Initialize(BaseCard data, GameObject realCardPrefab, ShopManager manager)
     {
         myCardData = data;
         myManager = manager;
@@ -20,13 +20,24 @@ public class ShopSlot : MonoBehaviour
         foreach (Transform child in cardContainer) Destroy(child.gameObject);
 
         // 2. Spawn the visual card
+        // Note: realCardPrefab IS the chosen prefab from ShopManager (Unit or Upgrade)
         GameObject visualCard = Instantiate(realCardPrefab, cardContainer, false);
 
         // 3. Pass data to the prefab and let IT handle the display
-        CardDisplayHandler display = visualCard.GetComponent<CardDisplayHandler>();
+        // Try BaseCardDisplay first (the new system)
+        BaseCardDisplay display = visualCard.GetComponent<BaseCardDisplay>();
         if (display != null)
         {
-            display.SetCardData(data);
+            // For the SHOP display, we also clone Units so that if we later add functionality 
+            // to "preview upgrade" or similar, we don't mess with the asset.
+            // BUT we buy the original asset (so we get a fresh unit when we buy).
+            BaseCard displayData = data;
+            if (data is UnitStats unit)
+            {
+                displayData = Instantiate(unit);
+            }
+            
+            display.SetCardData(displayData);
         }
 
         // 4. Disable Raycasts on the spawned card so we can click the shop button behind it

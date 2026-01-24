@@ -23,6 +23,15 @@ public class GameManager : MonoBehaviour
     private TMPro.TextMeshProUGUI m_buttonText;
     private TMPro.TMP_InputField m_inputField;
     private UnityEngine.UI.Button m_quitButton;
+    [SerializeField]
+    private GameObject m_enemyBase;
+    [SerializeField]
+    private GameObject m_enemySpawnPoint;
+
+    [SerializeField]
+    private GameObject m_playerBase;
+    [SerializeField]
+    private GameObject m_playerSpawnPoint;
 
     private SaveDataBase m_leaderboard;
 
@@ -90,6 +99,7 @@ public class GameManager : MonoBehaviour
 
             m_endGameMenu.SetActive(false);
         }
+        ResetAndStartLevel(0);
         if (m_pauseMenu != null)
         {
             m_pauseMenu.SetActive(false);
@@ -122,7 +132,14 @@ public class GameManager : MonoBehaviour
             {
                 int current = OpponentBehavior.Instance.currentLevelIndex + 1;
                 int total = OpponentBehavior.Instance.GetMaxLevel() + 1;
-                m_levelText.text = $"Niveau {current} / {total}";
+                if (current > total)
+                {
+                    m_levelText.text = $"Mode infini, niveau {current} / ∞";
+                }
+                else
+                {
+                    m_levelText.text = $"Niveau {current} / {total}";
+                }
             }
 
             if (m_inputField != null)
@@ -173,8 +190,39 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
+        if (OpponentBehavior.Instance != null)
+        {
+            ResetAndStartLevel(OpponentBehavior.Instance.currentLevelIndex + 1);
+        }
+    }
+
+    private void ResetAndStartLevel(int levelIndex)
+    {
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        foreach (var unit in units)
+        {
+            Destroy(unit.gameObject);
+        }
+
+        GameObject pBase =
+            Instantiate(m_playerBase, m_playerSpawnPoint.transform.position, m_playerSpawnPoint.transform.rotation);
+        pBase.layer = LayerMask.NameToLayer("TeamPlayer");
+
+        GameObject eBase =
+            Instantiate(m_enemyBase, m_enemySpawnPoint.transform.position, m_enemySpawnPoint.transform.rotation);
+        eBase.layer = LayerMask.NameToLayer("TeamEnemy");
+
+        if (OpponentBehavior.Instance != null)
+        {
+            OpponentBehavior.Instance.opponentBase = eBase.transform;
+            OpponentBehavior.Instance.StartLevel(levelIndex);
+        }
+
+        if (m_endGameMenu != null)
+            m_endGameMenu.SetActive(false);
+
+        State = GameState.Playing;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitGame()

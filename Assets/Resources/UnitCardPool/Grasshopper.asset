@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c177e45de295cdd4986066aa9e1f77f5, type: 3}
   m_Name: Grasshopper
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  cardName: 
+  cardName: Grass Hopper
   cost: 2
   icon: {fileID: -8320102380781528936, guid: bc6d5e53c4b7029639e406dddd437447, type: 3}
   unitPrefab: {fileID: 7521143762550723410, guid: b958223e8521fca4fb1d9a4acb2a836c, type: 3}

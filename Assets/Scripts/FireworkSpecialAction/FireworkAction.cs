@@ -5,29 +5,29 @@ using System.Collections;
 public class FireworkAction : MonoBehaviour, IPointerClickHandler
 {
     [Header("Dégâts AOE")]
-    public float damage = 40f;
+    public float damage = 4.0f;
     public float explosionRadius = 2f;
     public AnimationCurve damageFalloff = AnimationCurve.Linear(0, 1, 1, 0.3f);
 
     [Header("Réglages")]
     public float speed = 3f;
     public float amplitudeTremblement = 0.05f;
-    
+
     [Header("Effets visuels")]
     [Tooltip("Prefab de l'effet de trainée")]
     public GameObject trailEffectPrefab;
-    
+
     [Tooltip("Prefab de l'effet d'explosion")]
     public GameObject explosionEffectPrefab;
 
     private Transform targetPoint;
     private FireworkCannonManager manager;
-    
+
     private bool isMoving = false;
     private bool canClick = false;
     private Coroutine trembleCoroutine;
     private GameObject trailEffectInstance;
-    
+
     void Start()
     {
         // Désactiver le sprite renderer moche
@@ -36,7 +36,7 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
         {
             spriteRenderer.enabled = false;
         }
-        
+
         // Créer l'effet de trainée depuis le prefab
         if (trailEffectPrefab != null)
         {
@@ -47,21 +47,21 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
         else
         {
 
-        CreateProjectileParticles();
+            CreateProjectileParticles();
         }
     }
-    
+
     void CreateProjectileParticles()
     {
         GameObject particleObj = new GameObject("ProjectileParticles");
         particleObj.transform.SetParent(transform);
         particleObj.transform.localPosition = Vector3.zero;
-        
+
         ParticleSystem projectileParticles = particleObj.AddComponent<ParticleSystem>();
-        
+
         // Arrêter le ParticleSystem avant de le configurer
         projectileParticles.Stop();
-        
+
         var main = projectileParticles.main;
         main.startLifetime = 0.5f;
         main.startSpeed = new ParticleSystem.MinMaxCurve(0.1f, 0.3f); // Très lent pour rester groupées
@@ -70,36 +70,36 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
         main.maxParticles = 200; // Même nombre que l'explosion
         main.loop = true;
         main.simulationSpace = ParticleSystemSimulationSpace.World;
-        
+
         var emission = projectileParticles.emission;
         emission.rateOverTime = 400; // Beaucoup de particules générées
-        
+
         var shape = projectileParticles.shape;
         shape.shapeType = ParticleSystemShapeType.Sphere;
         shape.radius = 0.05f; // Très petit rayon = très concentré
-        
+
         // Fade out
         var colorOverLifetime = projectileParticles.colorOverLifetime;
         colorOverLifetime.enabled = true;
         Gradient gradient = new Gradient();
         gradient.SetKeys(
-            new GradientColorKey[] { 
+            new GradientColorKey[] {
                 new GradientColorKey(new Color(1f, 0.5f, 0f), 0f),
                 new GradientColorKey(Color.red, 1f)
             },
-            new GradientAlphaKey[] { 
+            new GradientAlphaKey[] {
                 new GradientAlphaKey(1f, 0f),
                 new GradientAlphaKey(0f, 1f)
             }
         );
         colorOverLifetime.color = new ParticleSystem.MinMaxGradient(gradient);
-        
+
         var renderer = projectileParticles.GetComponent<ParticleSystemRenderer>();
         renderer.sortingOrder = 15;
-        
+
         projectileParticles.Play();
     }
-    
+
     public bool IsMoving()
     {
         return isMoving;
@@ -134,7 +134,7 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
         return closest;
     }
 
-    public void EnableClick() 
+    public void EnableClick()
     {
         canClick = true;
     }
@@ -204,19 +204,19 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
             //transform.LookAt(Vector3.Lerp(m1, m2, t + 0.01f));
 
             // --- CALCUL DE LA ROTATION ---
-        // On calcule la direction vers laquelle on va
-        Vector3 direction = currentPos - previousPos;
-        transform.position = currentPos;
+            // On calcule la direction vers laquelle on va
+            Vector3 direction = currentPos - previousPos;
+            transform.position = currentPos;
 
-        if (direction != Vector3.zero)
-        {
-            // On calcule l'angle en degrés
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            
-            // On applique la rotation sur l'axe Z
-            // Note : Soustrais 90 si ton triangle pointe vers le haut par défaut
-            transform.rotation = Quaternion.Euler(0, 0, angle - 90f); 
-        }
+            if (direction != Vector3.zero)
+            {
+                // On calcule l'angle en degrés
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                // On applique la rotation sur l'axe Z
+                // Note : Soustrais 90 si ton triangle pointe vers le haut par défaut
+                transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+            }
 
             yield return null;
         }
@@ -227,11 +227,12 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
 
     public void LaunchVertical()
     {
-        if (trembleCoroutine != null) {
+        if (trembleCoroutine != null)
+        {
             StopCoroutine(trembleCoroutine);
         }
 
-        canClick = false; 
+        canClick = false;
         transform.SetParent(null);
         StartCoroutine(FlyToSky());
     }
@@ -240,7 +241,7 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
     {
         isMoving = true;
         float t = 0;
-        while (t < 2.5f) 
+        while (t < 2.5f)
         {
             transform.Translate(Vector3.up * (speed * 2) * Time.deltaTime, Space.World);
             t += Time.deltaTime;
@@ -254,7 +255,7 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
         // Explosion AOE - Infliger les dégâts dans le rayon
         Vector3 explosionPos = transform.position;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(explosionPos, explosionRadius, LayerMask.GetMask("TeamEnemy"));
-        
+
         int hitCount = 0;
         foreach (Collider2D collider in colliders)
         {
@@ -266,12 +267,12 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
                 float normalizedDistance = Mathf.Clamp01(distance / explosionRadius);
                 float damageMultiplier = damageFalloff.Evaluate(normalizedDistance);
                 float finalDamage = damage * damageMultiplier;
-                
+
                 targetUnit.TakeDamage(finalDamage);
                 hitCount++;
             }
         }
-        
+
         if (explosionEffectPrefab != null)
         {
             Instantiate(explosionEffectPrefab, explosionPos, Quaternion.identity);
@@ -282,8 +283,9 @@ public class FireworkAction : MonoBehaviour, IPointerClickHandler
             explosionObj.transform.position = explosionPos;
             explosionObj.AddComponent<ExplosionEffect>();
         }
-        
-        if (manager != null) {
+
+        if (manager != null)
+        {
             manager.StartNewCycle();
         }
         Destroy(gameObject);

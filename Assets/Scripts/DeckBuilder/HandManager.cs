@@ -4,25 +4,26 @@ using System.Collections.Generic;
 public class HandManager : MonoBehaviour
 {
     /// <summary>
-    /// Returns a list of all UnitStats currently residing in this Hand Area.
+    /// Returns a list of all UnitData currently residing in this Hand Area.
     /// This includes any runtime modifications (upgrades) applied to the specific instances.
     /// </summary>
-    public List<UnitStats> GetUnitStatsInHand()
+    public void GetUnitStatsInHand()
     {
-        List<UnitStats> currentStats = new List<UnitStats>();
+        ShopManager shopManager = FindFirstObjectByType<ShopManager>(FindObjectsInactive.Include);
+        DeckManager deckManager = null;
 
-        foreach (Transform child in transform)
+        if (shopManager != null && shopManager.deckManager != null)
         {
-            // We look for BaseCardDisplay, which holds the runtime data
-            BaseCardDisplay display = child.GetComponent<BaseCardDisplay>();
-
-            // We only care about UnitStats (ignoring UpgradeCards or cosmetic items)
-            if (display != null && display.CardData is UnitStats stats)
-            {
-                currentStats.Add(stats);
-            }
+            deckManager = shopManager.deckManager;
+        }
+        else
+        {
+            deckManager = FindFirstObjectByType<DeckManager>(FindObjectsInactive.Include);
         }
 
-        return currentStats;
+        if (deckManager != null)
+        {
+            deckManager.SaveToInventory();
+        }
     }
 }

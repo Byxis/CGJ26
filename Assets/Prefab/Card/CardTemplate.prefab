@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7e0094b2348a91f8db542f50863919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardController
-  unitData: {fileID: 0}
+  unitData: {fileID: 11400000, guid: 1e7bb5ddc407bc240ac5350166f09608, type: 2}
   iconImage: {fileID: 1958597262463497404}
   progressSlider: {fileID: 7652724583738005022}
   fillImage: {fileID: 8067988136449869405}
@@ -634,6 +634,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   costText: {fileID: 1070052902599719858}
+  clicksRequiredToSpawn: 0
 --- !u!1 &9173379723337102312
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
   cardName: Hornet
   cost: 3
+  icon: {fileID: 0}
+  clicksRequiredToSpawn: 0
   maxHealth: 30
   speed: 4
   damage: 5
@@ -52,3 +54,4 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   invocablePrefab: {fileID: 0}
   numberOfInvocable: 0
+  animator: {fileID: 9100000, guid: 19018e7b595c6984e9670cab29185924, type: 2}

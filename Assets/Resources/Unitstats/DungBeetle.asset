@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
   cardName: Dung beetle
   cost: 1
+  icon: {fileID: 0}
+  clicksRequiredToSpawn: 0
   maxHealth: 80
   speed: 0.7
   damage: 0.5
@@ -34,3 +36,4 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   invocablePrefab: {fileID: 0}
   numberOfInvocable: 0
+  animator: {fileID: 9100000, guid: 5a8d7e10a3d26e643be5b5e525ba3177, type: 2}

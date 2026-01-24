@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
   cardName: Spider
   cost: 10
+  icon: {fileID: 0}
+  clicksRequiredToSpawn: 0
   maxHealth: 10
   speed: 0.7
   damage: 3
@@ -34,3 +36,4 @@ MonoBehaviour:
   projectilePrefab: {fileID: 8391138026608434301, guid: 3b6b7236514873440a24a31db79f4aca, type: 3}
   invocablePrefab: {fileID: 0}
   numberOfInvocable: 0
+  animator: {fileID: 9100000, guid: 4312356d68e67ad458f1c98b7878c41a, type: 2}

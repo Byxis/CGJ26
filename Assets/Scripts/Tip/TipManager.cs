@@ -48,6 +48,7 @@ public class TipManager : MonoBehaviour
     private void AddToQueue(TipData data)
     {
         tipQueue.Enqueue(data);
+
         if (!isTipActive)
         {
             ShowNextTip();

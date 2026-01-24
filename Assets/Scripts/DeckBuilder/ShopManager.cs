@@ -1,29 +1,29 @@
 using UnityEngine;
-using UnityEngine.UI; 
-using TMPro; 
+using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
 {
     [Header("Configuration")]
-    public string unitResourcesPath = "UnitCardPool"; 
+    public string unitResourcesPath = "UnitCardPool";
     public string upgradeResourcesPath = "UpgradeCardPool";
 
     [Header("UI References")]
-    public TextMeshProUGUI goldText;      // Drag Gold Text here
-    public Button rerollButton;           // Drag Reroll Button here
-    public Transform shopContainer;       // Drag Shop Panel here
-    
+    public TextMeshProUGUI goldText;  // Drag Gold Text here
+    public Button rerollButton;       // Drag Reroll Button here
+    public Transform shopContainer;   // Drag Shop Panel here
+
     [Header("Prefabs")]
-    public GameObject shopSlotPrefab; 
+    public GameObject shopSlotPrefab;
     public GameObject unitCardPrefab;     // FORMERLY realCardPrefab
     public GameObject upgradeCardPrefab;  // NEW
 
     [Header("References")]
-    public DeckManager deckManager; // (Or HandManager, whichever you are using)
+    public DeckManager deckManager;  // (Or HandManager, whichever you are using)
 
-    private BaseCard[] fullCardPool; 
+    private BaseCard[] fullCardPool;
 
     [Header("Economy")]
     public int startingGold = 100;
@@ -41,27 +41,32 @@ public class ShopManager : MonoBehaviour
         {
             rerollButton.onClick.RemoveAllListeners();
             rerollButton.onClick.AddListener(OnRerollClick);
-            
+
             // Optional: Update button text to show cost
             TextMeshProUGUI btnText = rerollButton.GetComponentInChildren<TextMeshProUGUI>();
-            if (btnText != null) btnText.text = $"Reroll ({rerollCost}g)";
+            if (btnText != null)
+                btnText.text = $"Reroll ({rerollCost}g)";
         }
 
         // 3. Load Cards (Load both pools and merge)
         var units = Resources.LoadAll<BaseCard>(unitResourcesPath);
         var upgrades = Resources.LoadAll<BaseCard>(upgradeResourcesPath);
-        
+
         // Merge arrays
         List<BaseCard> mergedList = new List<BaseCard>();
-        if(units != null) mergedList.AddRange(units);
-        if(upgrades != null) mergedList.AddRange(upgrades);
-        
+        if (units != null)
+            mergedList.AddRange(units);
+        if (upgrades != null)
+            mergedList.AddRange(upgrades);
+
         fullCardPool = mergedList.ToArray();
 
-        if (fullCardPool.Length == 0) Debug.LogError($"No cards found! Check Resources folders: '{unitResourcesPath}' and '{upgradeResourcesPath}'");
+        if (fullCardPool.Length == 0)
+            Debug.LogError(
+                $"No cards found! Check Resources folders: '{unitResourcesPath}' and '{upgradeResourcesPath}'");
 
         // 4. Free Reroll on Start
-        PerformReroll(); 
+        PerformReroll();
     }
 
     // --- BUTTON CLICK HANDLER ---
@@ -90,7 +95,8 @@ public class ShopManager : MonoBehaviour
     {
         // 1. Turn ON layout to organize
         HorizontalLayoutGroup layout = shopContainer.GetComponent<HorizontalLayoutGroup>();
-        if (layout != null) layout.enabled = true;
+        if (layout != null)
+            layout.enabled = true;
 
         // 2. Clear old slots
         foreach (Transform child in shopContainer) Destroy(child.gameObject);
@@ -98,17 +104,19 @@ public class ShopManager : MonoBehaviour
         // 3. Spawn 5 new slots
         for (int i = 0; i < 5; i++)
         {
-            if (fullCardPool.Length == 0) break;
+            if (fullCardPool.Length == 0)
+                break;
 
             BaseCard randomData = fullCardPool[Random.Range(0, fullCardPool.Length)];
             GameObject newSlotObj = Instantiate(shopSlotPrefab, shopContainer);
-            
+
             ShopSlot newSlotScript = newSlotObj.GetComponent<ShopSlot>();
             if (newSlotScript != null)
             {
                 // CHOOSE PREFAB BASED ON TYPE
                 GameObject prefabToUse = unitCardPrefab;
-                if (randomData is UpgradeCard) prefabToUse = upgradeCardPrefab;
+                if (randomData is UpgradeCard)
+                    prefabToUse = upgradeCardPrefab;
 
                 newSlotScript.Initialize(randomData, prefabToUse, this);
             }
@@ -120,9 +128,10 @@ public class ShopManager : MonoBehaviour
 
     IEnumerator DisableShopLayout()
     {
-        yield return new WaitForEndOfFrame(); 
+        yield return new WaitForEndOfFrame();
         HorizontalLayoutGroup layout = shopContainer.GetComponent<HorizontalLayoutGroup>();
-        if (layout != null) layout.enabled = false;
+        if (layout != null)
+            layout.enabled = false;
     }
 
     // --- BUY LOGIC ---
@@ -132,7 +141,7 @@ public class ShopManager : MonoBehaviour
         if (currentGold >= card.cost)
         {
             Debug.Log($"Bought {card.cardName} for {card.cost}");
-            
+
             // 1. Pay Gold
             currentGold -= card.cost;
             UpdateGoldUI();
